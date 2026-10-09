@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="th">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>คำอวยพรวันแต่งงาน</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&amp;family=Noto+Serif+Thai:wght@400;500;600&amp;family=Playfair+Display:ital,wght@0,400;0,600;1,400&amp;display=swap" rel="stylesheet">
+  <style>
+    :root { --ink:#313b30; --olive:#57664d; --cream:#faf7f0; --gold:#b69b67; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; font-family:'Noto Sans Thai',sans-serif; color:var(--ink); background-color: var(--cream);}
+    .serif-thai { font-family:'Noto Serif Thai',serif; }
+    .serif-en { font-family:'Playfair Display',serif; }
+    .hero { min-height:610px; min-height:calc(78 * min(var(--vh, 1vh), 1vh)); background-color: var(--olive);}
+    .hero-shade { background:linear-gradient(90deg,rgba(23,35,27,.76),rgba(23,35,27,.19) 75%); }
+    .ornament { width:64px; height:1px; background:var(--gold); }
+    .wish-card { border:1px solid #e9e4d9; box-shadow:0 10px 35px rgba(47,56,43,.045); background: white;}
+    .field { border:1px solid #deddd3; background:#fffefa; transition:border-color .2s,box-shadow .2s; }
+    .field:focus { border-color:var(--olive); box-shadow:0 0 0 3px rgba(87,102,77,.16); outline:none; }
+    :focus-visible { outline:3px solid #b69b67; outline-offset:3px; }
+    .reveal { animation:rise .7s both; }
+    .reveal-later { animation:rise .8s .18s both; }
+    @keyframes rise { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+  </style>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+ </head>
+ <body class="w-full">
+  <header class="w-full">
+   <section class="hero relative flex w-full items-center overflow-hidden">
+    <div class="hero-shade absolute inset-0" aria-hidden="true"></div>
+    <div class="relative z-10 mx-auto w-full max-w-6xl px-6 py-24 sm:px-10 text-white">
+     <div class="max-w-2xl">
+      <p class="serif-en reveal mb-6 tracking-[.26em] uppercase">Wedding Celebration</p>
+      <div class="ornament reveal mb-7" aria-hidden="true"></div>
+      <h1 class="serif-thai reveal mb-6 text-4xl font-medium leading-[1.45]">ขอเรียนเชิญร่วมงานมงคลสมรส</h1>
+      <p class="reveal-later mb-9 max-w-lg leading-8 text-gray-200">ร่วมแสดงความยินดีและเป็นสักขีพยานในวันสำคัญของเรา</p>
+      <a href="#write-wish" class="inline-flex min-h-12 items-center justify-center rounded-full bg-white text-[#313b30] px-8 py-3 font-semibold transition hover:-translate-y-0.5 hover:shadow-xl">ร่วมอวยพร</a>
+     </div>
+    </div>
+   </section>
+  </header>
+  <main class="w-full bg-[#faf7f0]">
+   <section id="write-wish" class="w-full px-6 py-16 sm:px-10 md:py-24">
+    <div class="mx-auto w-full max-w-6xl">
+     <div class="mb-10 text-center">
+      <p class="serif-en mb-3 tracking-[.2em] uppercase text-[#b69b67]">Guestbook</p>
+      <h2 class="serif-thai font-medium text-3xl leading-[1.5]">สมุดอวยพร</h2>
+     </div>
+     <div class="grid items-start gap-10 lg:grid-cols-[.9fr_1.1fr]">
+      <form id="wish-form" class="bg-white rounded-3xl p-6 shadow-sm sm:p-9 border border-[#e9e4d9]">
+       <div class="mb-6">
+        <label for="guest-name" class="mb-2 block font-semibold">ชื่อของคุณ</label> 
+        <input id="guest-name" class="field w-full rounded-xl px-4 py-3" type="text" maxlength="80" required>
+       </div>
+       <div class="mb-7">
+        <label for="wish-message" class="mb-2 block font-semibold">คำอวยพร</label> 
+        <textarea id="wish-message" class="field min-h-40 w-full resize-y rounded-xl px-4 py-3" maxlength="1000" required></textarea>
+       </div>
+       <button id="submit-button" class="bg-[#57664d] text-white min-h-12 w-full rounded-full px-6 py-3 font-semibold transition hover:brightness-110 disabled:opacity-60" type="submit">ส่งคำอวยพร</button>
+       <p id="sending-status" class="mt-4 hidden text-center text-blue-600">กำลังส่งข้อมูล...</p>
+       <p id="success-status" class="mt-4 hidden text-center text-green-600">ส่งคำอวยพรเรียบร้อยแล้ว ขอบคุณครับ/ค่ะ!</p>
+       <p id="error-status" class="mt-4 hidden text-center text-red-600">เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง</p>
+      </form>
+      <div>
+       <div class="mb-6 flex items-end justify-between gap-4">
+        <h2 class="serif-thai text-xl font-medium">คำอวยพรจากแขก</h2>
+        <span id="wish-count" class="rounded-full border border-[#d9d7c9] px-3 py-1 text-sm bg-white">กำลังโหลด...</span>
+       </div>
+       <p id="empty-state" class="hidden rounded-2xl border border-dashed border-[#c9cebd] px-6 py-12 text-center leading-8 bg-white">ยังไม่มีคำอวยพร เป็นคนแรกที่ร่วมอวยพรสิครับ/คะ!</p>
+       <div id="wish-list" class="grid max-h-[650px] gap-4 overflow-y-auto pr-1"></div>
+      </div>
+     </div>
+    </div>
+   </section>
+  </main>
+  
+  <template id="wish-template">
+   <article class="wish-card rounded-2xl p-6">
+    <div class="mb-3 flex flex-wrap items-baseline justify-between gap-2">
+     <h3 data-template-id="wish-name" class="font-semibold break-words text-lg"></h3>
+     <time data-template-id="wish-date" class="text-sm text-gray-500"></time>
+    </div>
+    <p data-template-id="wish-message" class="whitespace-pre-wrap break-words leading-8"></p>
+   </article>
+  </template>
+
+  <script>
+    const form = document.getElementById('wish-form');
+    const submitButton = document.getElementById('submit-button');
+    const list = document.getElementById('wish-list');
+    const empty = document.getElementById('empty-state');
+    const count = document.getElementById('wish-count');
+    const statuses = ['sending-status', 'success-status', 'error-status'];
+
+    function showStatus(id) {
+      statuses.forEach(key => document.getElementById(key).classList.toggle('hidden', key !== id));
+    }
+
+    async function fetchWishes() {
+      try {
+        const response = await fetch('/api/wishes');
+        const data = await response.json();
+        renderWishes(data);
+      } catch (error) {
+        console.error("Error fetching wishes:", error);
+      }
+    }
+
+    function renderWishes(data) {
+      count.textContent = `${data.length} คำอวยพร`;
+      empty.classList.toggle('hidden', data.length > 0);
+      list.innerHTML = ''; 
+
+      data.forEach(record => {
+        const card = document.getElementById('wish-template').content.cloneNode(true);
+        card.querySelector('[data-template-id="wish-name"]').textContent = record.guest_name;
+        card.querySelector('[data-template-id="wish-message"]').textContent = record.message;
+        
+        const parsed = new Date(record.created_at + 'Z'); // รองรับเวลาแบบ UTC
+        const displayDate = new Intl.DateTimeFormat('th-TH', { dateStyle:'medium', timeStyle:'short' }).format(parsed);
+        card.querySelector('[data-template-id="wish-date"]').textContent = displayDate;
+        
+        list.appendChild(card);
+      });
+    }
+
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+      
+      const guestName = document.getElementById('guest-name').value.trim();
+      const message = document.getElementById('wish-message').value.trim();
+      
+      submitButton.disabled = true;
+      showStatus('sending-status');
+
+      try {
+        const response = await fetch('/api/wishes', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ guest_name: guestName, message: message })
+        });
+
+        if (response.ok) {
+          form.reset();
+          showStatus('success-status');
+          fetchWishes(); // โหลดข้อมูลใหม่
+        } else {
+          showStatus('error-status');
+        }
+      } catch (error) {
+        showStatus('error-status');
+      } finally {
+        submitButton.disabled = false;
+        setTimeout(() => { document.getElementById('success-status').classList.add('hidden'); }, 3000);
+      }
+    });
+
+    // โหลดข้อมูลครั้งแรกเมื่อเปิดเว็บ
+    fetchWishes();
+  </script>
+ </body>
+</html>
