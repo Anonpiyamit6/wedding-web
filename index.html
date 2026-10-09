@@ -4,87 +4,179 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>คำอวยพรวันแต่งงาน</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&amp;family=Noto+Serif+Thai:wght@400;500;600&amp;family=Playfair+Display:ital,wght@0,400;0,600;1,400&amp;display=swap" rel="stylesheet">
+  <!-- นำเข้าฟอนต์โรแมนติกสำหรับงานแต่ง -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Noto+Sans+Thai:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+  
   <style>
-    :root { --ink:#313b30; --olive:#57664d; --cream:#faf7f0; --gold:#b69b67; }
-    * { box-sizing:border-box; }
-    html { scroll-behavior:smooth; }
-    body { margin:0; font-family:'Noto Sans Thai',sans-serif; color:var(--ink); background-color: var(--cream);}
-    .serif-thai { font-family:'Noto Serif Thai',serif; }
-    .serif-en { font-family:'Playfair Display',serif; }
-    .hero { min-height:610px; min-height:calc(78 * min(var(--vh, 1vh), 1vh)); background-color: var(--olive);}
-    .hero-shade { background:linear-gradient(90deg,rgba(23,35,27,.76),rgba(23,35,27,.19) 75%); }
-    .ornament { width:64px; height:1px; background:var(--gold); }
-    .wish-card { border:1px solid #e9e4d9; box-shadow:0 10px 35px rgba(47,56,43,.045); background: white;}
-    .field { border:1px solid #deddd3; background:#fffefa; transition:border-color .2s,box-shadow .2s; }
-    .field:focus { border-color:var(--olive); box-shadow:0 0 0 3px rgba(87,102,77,.16); outline:none; }
-    :focus-visible { outline:3px solid #b69b67; outline-offset:3px; }
-    .reveal { animation:rise .7s both; }
-    .reveal-later { animation:rise .8s .18s both; }
-    @keyframes rise { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+    /* ตั้งค่าสีธีม พาสเทล */
+    :root { 
+      --cream: #FCF9F2; 
+      --pink-pastel: #FADCD9; 
+      --pink-dark: #D88C9A;
+      --green-pastel: #E2EFE6; 
+      --green-dark: #8BA895;
+      --text-main: #5C4D4D;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { 
+      margin: 0; 
+      font-family: 'Noto Sans Thai', sans-serif; 
+      color: var(--text-main); 
+      background-color: var(--cream);
+      background-image: radial-gradient(var(--pink-pastel) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .font-romantic { font-family: 'Charm', cursive; }
+    .font-eng-script { font-family: 'Great Vibes', cursive; }
+    
+    /* ตกแต่งพื้นหลังส่วนบน */
+    .hero-bg {
+      background: linear-gradient(135deg, rgba(252,249,242,0.9) 0%, rgba(250,220,217,0.7) 50%, rgba(226,239,230,0.8) 100%);
+      position: relative;
+    }
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: url('https://www.transparenttextures.com/patterns/stardust.png') opacity(0.3);
+      pointer-events: none;
+    }
+
+    /* ตกแต่งการ์ดและปุ่ม */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      box-shadow: 0 20px 40px rgba(216, 140, 154, 0.08);
+    }
+    .field { 
+      border: 2px solid #F0EBE1; 
+      background: #FFFFFF; 
+      transition: all 0.3s; 
+    }
+    .field:focus { 
+      border-color: var(--pink-dark); 
+      box-shadow: 0 0 0 4px rgba(216, 140, 154, 0.15); 
+      outline: none; 
+    }
+    .btn-pastel {
+      background: linear-gradient(135deg, var(--pink-dark), #e29caa);
+      color: white;
+      box-shadow: 0 4px 15px rgba(216, 140, 154, 0.3);
+      transition: all 0.3s ease;
+    }
+    .btn-pastel:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(216, 140, 154, 0.4);
+    }
+
+    /* Animation นุ่มๆ */
+    .reveal { animation: fadeUp 1s ease-out forwards; opacity: 0; }
+    .reveal-delay { animation: fadeUp 1s ease-out 0.3s forwards; opacity: 0; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
-  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
  </head>
+
  <body class="w-full">
   <header class="w-full">
-   <section class="hero relative flex w-full items-center overflow-hidden">
-    <div class="hero-shade absolute inset-0" aria-hidden="true"></div>
-    <div class="relative z-10 mx-auto w-full max-w-6xl px-6 py-24 sm:px-10 text-white">
-     <div class="max-w-2xl">
-      <p class="serif-en reveal mb-6 tracking-[.26em] uppercase">Wedding Celebration</p>
-      <div class="ornament reveal mb-7" aria-hidden="true"></div>
-      <h1 class="serif-thai reveal mb-6 text-4xl font-medium leading-[1.45]">ขอเรียนเชิญร่วมงานมงคลสมรส</h1>
-      <p class="reveal-later mb-9 max-w-lg leading-8 text-gray-200">ร่วมแสดงความยินดีและเป็นสักขีพยานในวันสำคัญของเรา</p>
-      <a href="#write-wish" class="inline-flex min-h-12 items-center justify-center rounded-full bg-white text-[#313b30] px-8 py-3 font-semibold transition hover:-translate-y-0.5 hover:shadow-xl">ร่วมอวยพร</a>
-     </div>
+   <!-- ส่วนหน้าแรก (Hero) -->
+   <section class="hero-bg relative flex w-full items-center justify-center overflow-hidden min-h-[75vh]">
+    <div class="relative z-10 mx-auto w-full max-w-4xl px-6 py-24 text-center">
+      <p class="font-eng-script reveal text-5xl md:text-6xl text-[#D88C9A] mb-4">Wedding Celebration</p>
+      <h1 class="font-romantic reveal text-4xl md:text-5xl font-bold leading-[1.5] text-[#5C4D4D] mb-6">
+        ขอเรียนเชิญร่วมงานมงคลสมรส
+      </h1>
+      <div class="flex justify-center items-center gap-4 reveal mb-8">
+        <span class="h-[1px] w-12 bg-[#8BA895]"></span>
+        <svg class="w-6 h-6 text-[#D88C9A]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        <span class="h-[1px] w-12 bg-[#8BA895]"></span>
+      </div>
+      <p class="reveal-delay mb-10 text-lg max-w-lg mx-auto text-[#7A706A] font-light">
+        ร่วมแสดงความยินดีและเป็นสักขีพยานในวันสำคัญของเรา
+      </p>
+      <a href="#write-wish" class="reveal-delay btn-pastel inline-flex min-h-12 items-center justify-center rounded-full px-10 py-3 font-medium tracking-wide">
+        ร่วมเขียนคำอวยพร
+      </a>
     </div>
    </section>
   </header>
-  <main class="w-full bg-[#faf7f0]">
-   <section id="write-wish" class="w-full px-6 py-16 sm:px-10 md:py-24">
+
+  <main class="w-full">
+   <section id="write-wish" class="w-full px-6 py-20 sm:px-10">
     <div class="mx-auto w-full max-w-6xl">
-     <div class="mb-10 text-center">
-      <p class="serif-en mb-3 tracking-[.2em] uppercase text-[#b69b67]">Guestbook</p>
-      <h2 class="serif-thai font-medium text-3xl leading-[1.5]">สมุดอวยพร</h2>
+     
+     <div class="mb-14 text-center reveal">
+      <p class="font-eng-script text-4xl text-[#8BA895] mb-2">Guestbook</p>
+      <h2 class="font-romantic text-4xl font-bold text-[#5C4D4D]">สมุดอวยพร</h2>
      </div>
-     <div class="grid items-start gap-10 lg:grid-cols-[.9fr_1.1fr]">
-      <form id="wish-form" class="bg-white rounded-3xl p-6 shadow-sm sm:p-9 border border-[#e9e4d9]">
+
+     <div class="grid items-start gap-12 lg:grid-cols-[1fr_1.2fr]">
+      
+      <!-- ฟอร์มเขียนคำอวยพร -->
+      <form id="wish-form" class="glass-card rounded-[2rem] p-8 sm:p-10 reveal-delay">
        <div class="mb-6">
-        <label for="guest-name" class="mb-2 block font-semibold">ชื่อของคุณ</label> 
-        <input id="guest-name" class="field w-full rounded-xl px-4 py-3" type="text" maxlength="80" required>
+        <label for="guest-name" class="mb-3 block font-medium text-[#7A706A]">ชื่อของคุณ (ผู้ร่วมอวยพร)</label> 
+        <input id="guest-name" class="field w-full rounded-2xl px-5 py-4 text-[#5C4D4D]" type="text" placeholder="ระบุชื่อของคุณ..." maxlength="80" required>
        </div>
-       <div class="mb-7">
-        <label for="wish-message" class="mb-2 block font-semibold">คำอวยพร</label> 
-        <textarea id="wish-message" class="field min-h-40 w-full resize-y rounded-xl px-4 py-3" maxlength="1000" required></textarea>
+       <div class="mb-8">
+        <label for="wish-message" class="mb-3 block font-medium text-[#7A706A]">ข้อความอวยพร</label> 
+        <textarea id="wish-message" class="field min-h-[180px] w-full resize-y rounded-2xl px-5 py-4 text-[#5C4D4D]" placeholder="เขียนความรู้สึกดีๆ ถึงบ่าวสาว..." maxlength="1000" required></textarea>
        </div>
-       <button id="submit-button" class="bg-[#57664d] text-white min-h-12 w-full rounded-full px-6 py-3 font-semibold transition hover:brightness-110 disabled:opacity-60" type="submit">ส่งคำอวยพร</button>
-       <p id="sending-status" class="mt-4 hidden text-center text-blue-600">กำลังส่งข้อมูล...</p>
-       <p id="success-status" class="mt-4 hidden text-center text-green-600">ส่งคำอวยพรเรียบร้อยแล้ว ขอบคุณครับ/ค่ะ!</p>
-       <p id="error-status" class="mt-4 hidden text-center text-red-600">เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง</p>
+       <button id="submit-button" class="btn-pastel w-full rounded-2xl px-6 py-4 font-medium text-lg disabled:opacity-60 disabled:cursor-not-allowed" type="submit">
+         ส่งคำอวยพร 🤍
+       </button>
+       
+       <!-- ข้อความแจ้งเตือนสถานะ -->
+       <div class="mt-4 h-6 text-center text-sm font-medium">
+         <p id="sending-status" class="hidden text-[#8BA895]">กำลังส่งความรักของคุณ...</p>
+         <p id="success-status" class="hidden text-[#D88C9A]">ส่งคำอวยพรเรียบร้อยแล้ว ขอบคุณมากครับ/ค่ะ!</p>
+         <p id="error-status" class="hidden text-red-400">เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง</p>
+       </div>
       </form>
-      <div>
-       <div class="mb-6 flex items-end justify-between gap-4">
-        <h2 class="serif-thai text-xl font-medium">คำอวยพรจากแขก</h2>
-        <span id="wish-count" class="rounded-full border border-[#d9d7c9] px-3 py-1 text-sm bg-white">กำลังโหลด...</span>
+
+      <!-- แสดงรายการคำอวยพร -->
+      <div class="reveal-delay">
+       <div class="mb-6 flex items-end justify-between gap-4 border-b border-[#E2EFE6] pb-4">
+        <h2 class="font-romantic text-2xl font-bold text-[#5C4D4D]">ข้อความจากแขกผู้มีเกียรติ</h2>
+        <span id="wish-count" class="rounded-full bg-[#E2EFE6] text-[#5C4D4D] px-4 py-1.5 text-sm font-medium">กำลังโหลด...</span>
        </div>
-       <p id="empty-state" class="hidden rounded-2xl border border-dashed border-[#c9cebd] px-6 py-12 text-center leading-8 bg-white">ยังไม่มีคำอวยพร เป็นคนแรกที่ร่วมอวยพรสิครับ/คะ!</p>
-       <div id="wish-list" class="grid max-h-[650px] gap-4 overflow-y-auto pr-1"></div>
+       
+       <p id="empty-state" class="hidden rounded-3xl border-2 border-dashed border-[#E2EFE6] bg-white/50 px-6 py-16 text-center text-[#8BA895]">
+         ยังไม่มีคำอวยพร<br>มาเป็นคนแรกที่ส่งความรู้สึกดีๆ กันเถอะ!
+       </p>
+       
+       <!-- จุดที่แสดงการ์ด (มี Scrollbar ถ้าเยอะ) -->
+       <div id="wish-list" class="grid max-h-[600px] gap-5 overflow-y-auto pr-2" style="scrollbar-width: thin; scrollbar-color: #D88C9A #FCF9F2;"></div>
       </div>
+
      </div>
     </div>
    </section>
   </main>
   
+  <footer class="w-full py-10 text-center text-sm text-[#8BA895]">
+    <p class="font-eng-script text-2xl">Thank you for joining our special day</p>
+  </footer>
+  
+  <!-- Template สำหรับการ์ดอวยพรแต่ละใบ -->
   <template id="wish-template">
-   <article class="wish-card rounded-2xl p-6">
-    <div class="mb-3 flex flex-wrap items-baseline justify-between gap-2">
-     <h3 data-template-id="wish-name" class="font-semibold break-words text-lg"></h3>
-     <time data-template-id="wish-date" class="text-sm text-gray-500"></time>
+   <article class="glass-card rounded-[1.5rem] p-6 transition-transform hover:-translate-y-1">
+    <div class="mb-4 flex flex-wrap items-baseline justify-between gap-2 border-b border-[#F0EBE1] pb-3">
+     <h3 data-template-id="wish-name" class="font-bold text-[#D88C9A] text-lg break-words"></h3>
+     <time data-template-id="wish-date" class="text-xs text-[#8BA895] font-medium tracking-wide"></time>
     </div>
-    <p data-template-id="wish-message" class="whitespace-pre-wrap break-words leading-8"></p>
+    <p data-template-id="wish-message" class="whitespace-pre-wrap break-words leading-relaxed text-[#5C4D4D] font-light"></p>
    </article>
   </template>
 
+  <!-- สคริปต์เชื่อมต่อฐานข้อมูล (ใช้ของเดิมที่เวิร์คแล้ว ไม่ต้องแก้) -->
   <script>
     const form = document.getElementById('wish-form');
     const submitButton = document.getElementById('submit-button');
@@ -94,7 +186,11 @@
     const statuses = ['sending-status', 'success-status', 'error-status'];
 
     function showStatus(id) {
-      statuses.forEach(key => document.getElementById(key).classList.toggle('hidden', key !== id));
+      statuses.forEach(key => {
+        const el = document.getElementById(key);
+        if(key === id) el.classList.remove('hidden');
+        else el.classList.add('hidden');
+      });
     }
 
     async function fetchWishes() {
@@ -108,8 +204,12 @@
     }
 
     function renderWishes(data) {
-      count.textContent = `${data.length} คำอวยพร`;
-      empty.classList.toggle('hidden', data.length > 0);
+      count.textContent = `${data.length} ข้อความ`;
+      if(data.length > 0) {
+        empty.classList.add('hidden');
+      } else {
+        empty.classList.remove('hidden');
+      }
       list.innerHTML = ''; 
 
       data.forEach(record => {
@@ -117,7 +217,7 @@
         card.querySelector('[data-template-id="wish-name"]').textContent = record.guest_name;
         card.querySelector('[data-template-id="wish-message"]').textContent = record.message;
         
-        const parsed = new Date(record.created_at + 'Z'); // รองรับเวลาแบบ UTC
+        const parsed = new Date(record.created_at + 'Z'); 
         const displayDate = new Intl.DateTimeFormat('th-TH', { dateStyle:'medium', timeStyle:'short' }).format(parsed);
         card.querySelector('[data-template-id="wish-date"]').textContent = displayDate;
         
@@ -132,6 +232,7 @@
       const message = document.getElementById('wish-message').value.trim();
       
       submitButton.disabled = true;
+      submitButton.innerHTML = "กำลังส่ง...";
       showStatus('sending-status');
 
       try {
@@ -144,7 +245,7 @@
         if (response.ok) {
           form.reset();
           showStatus('success-status');
-          fetchWishes(); // โหลดข้อมูลใหม่
+          fetchWishes(); 
         } else {
           showStatus('error-status');
         }
@@ -152,11 +253,11 @@
         showStatus('error-status');
       } finally {
         submitButton.disabled = false;
-        setTimeout(() => { document.getElementById('success-status').classList.add('hidden'); }, 3000);
+        submitButton.innerHTML = "ส่งคำอวยพร 🤍";
+        setTimeout(() => { document.getElementById('success-status').classList.add('hidden'); }, 4000);
       }
     });
 
-    // โหลดข้อมูลครั้งแรกเมื่อเปิดเว็บ
     fetchWishes();
   </script>
  </body>
