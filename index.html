@@ -65,7 +65,6 @@
     }
     .btn-pastel:hover { background: #c67c8a; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(216, 140, 154, 0.3);}
 
-    /* จัดการรูปโพลารอยด์ให้เป็น 4x6 (สัดส่วน 2:3) */
     .polaroid {
       background: #fff;
       padding: 6px 6px 24px 6px;
@@ -80,11 +79,10 @@
     @media (min-width: 640px) { .polaroid { padding: 8px 8px 30px 8px; } }
     .polaroid:hover { transform: rotate(0deg) scale(1.05); z-index: 10; }
     
-    /* พระเอกของการแก้รูปเบี้ยวอยู่ตรงนี้ครับ! */
     .polaroid img { 
       width: 100%; 
-      aspect-ratio: 2 / 3; /* บังคับสัดส่วน 4x6 เสมอ */
-      object-fit: cover;   /* ถ้ารูปยาวไปให้ตัดขอบอัตโนมัติ ห้ามบีบรูป! */
+      aspect-ratio: 2 / 3; 
+      object-fit: cover;   
       background: #f8f8f8; 
       border: 1px solid #f0f0f0; 
     }
@@ -223,7 +221,7 @@
 
   <template id="wish-template">
    <div class="wish-entry gap-3 sm:gap-5 mb-2 relative group">
-     <!-- ปรับขนาดกรอบโพลารอยด์ให้พอดีกับ 4x6 -->
+     <!-- ปรับขนาดกรอบโพลารอยด์ -->
      <div data-template-id="image-container" class="w-[110px] sm:w-[160px] flex-shrink-0 hidden pt-1">
        <div class="polaroid w-full mx-auto" title="คลิกเพื่อดูรูปใหญ่">
          <img data-template-id="wish-image" src="" alt="guest photo">
@@ -236,12 +234,8 @@
          <p data-template-id="wish-message" class="font-modern-thai font-light whitespace-pre-wrap leading-relaxed text-[#5A504A] text-[13px] sm:text-[15px] break-words"></p>
        </div>
        
-       <div class="mt-4 pt-3 border-t border-[#F5F5F5] flex justify-between items-end gap-2">
-         <!-- ปุ่มโหลดเดี่ยว -->
-         <button data-template-id="download-btn" class="text-[#8BA895] hover:text-[#D88C9A] transition flex items-center gap-1.5 text-[11px] sm:text-[12px] font-modern-thai bg-[#F9F9F9] hover:bg-white px-2.5 py-1.5 rounded-md border border-[#E2E2E2] shadow-sm">
-           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-           เซฟเดี่ยว
-         </button>
+       <!-- ลบปุ่มเซฟเดี่ยวออก เหลือแค่วันที่อยู่ฝั่งขวาคลีนๆ -->
+       <div class="mt-4 pt-3 border-t border-[#F5F5F5] flex justify-end">
          <time data-template-id="wish-date" class="font-modern-thai font-light text-[11px] sm:text-[12px] text-[#A39E9B] tracking-wide"></time>
        </div>
      </div>
@@ -325,10 +319,8 @@
       renderWishes(data);
     }
 
-    // ฟังก์ชันใช้แคปรูปที่ถูกนำมาใช้ทั้งปุ่มเดี่ยวและปุ่มรวม
+    // ฟังก์ชันใช้แคปรูปตอนกด โหลดทั้งหมด
     async function captureAndDownload(wishEntry, guestName, index = "") {
-      const dlBtn = wishEntry.querySelector('[data-template-id="download-btn"]');
-      dlBtn.style.display = 'none';
       wishEntry.style.backgroundColor = '#FCF9F2';
       wishEntry.style.padding = '20px';
       wishEntry.style.borderRadius = '16px';
@@ -343,7 +335,6 @@
       } catch (err) {
         console.error(err);
       } finally {
-        dlBtn.style.display = 'flex';
         wishEntry.style.backgroundColor = 'transparent';
         wishEntry.style.padding = '0';
       }
@@ -357,7 +348,6 @@
         const nameEl = card.querySelector('[data-template-id="wish-name"]');
         const msgEl = card.querySelector('[data-template-id="wish-message"]');
         const dateEl = card.querySelector('[data-template-id="wish-date"]');
-        const downloadBtn = card.querySelector('[data-template-id="download-btn"]');
         const wishEntry = card.querySelector('.wish-entry');
         
         nameEl.textContent = record.guest_name;
@@ -374,9 +364,6 @@
         
         const parsed = new Date(record.created_at + 'Z'); 
         dateEl.textContent = new Intl.DateTimeFormat('th-TH', { dateStyle:'medium', timeStyle:'short' }).format(parsed);
-        
-        // ปุ่มเซฟเดี่ยว
-        downloadBtn.addEventListener('click', () => captureAndDownload(wishEntry, record.guest_name));
 
         list.appendChild(card);
       });
@@ -399,7 +386,7 @@
           
           await captureAndDownload(entry, name, i+1);
           
-          // หน่วงเวลา 800ms ระหว่างการโหลดแต่ละรูป ป้องกันเบราว์เซอร์บล็อกการโหลดรัวๆ
+          // หน่วงเวลา 800ms ป้องกันเบราว์เซอร์บล็อก
           await new Promise(resolve => setTimeout(resolve, 800));
       }
 
