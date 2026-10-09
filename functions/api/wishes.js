@@ -1,7 +1,5 @@
-// ดึงข้อมูลคำอวยพรทั้งหมด
 export async function onRequestGet({ env }) {
   try {
-    // DB คือชื่อที่เราจะตั้งใน Cloudflare
     const { results } = await env.DB.prepare(
       "SELECT * FROM wishes ORDER BY created_at DESC"
     ).all();
@@ -11,19 +9,18 @@ export async function onRequestGet({ env }) {
   }
 }
 
-// บันทึกคำอวยพรใหม่
 export async function onRequestPost({ request, env }) {
   try {
     const data = await request.json();
     
-    // ตรวจสอบว่าส่งข้อมูลมาครบไหม
     if (!data.guest_name || !data.message) {
       return Response.json({ error: "ข้อมูลไม่ครบ" }, { status: 400 });
     }
 
+    // เพิ่มการบันทึกรูปภาพ (ถ้าไม่มีรูปให้เป็น null)
     await env.DB.prepare(
-      "INSERT INTO wishes (guest_name, message) VALUES (?, ?)"
-    ).bind(data.guest_name, data.message).run();
+      "INSERT INTO wishes (guest_name, message, image_base64) VALUES (?, ?, ?)"
+    ).bind(data.guest_name, data.message, data.image_base64 || null).run();
 
     return Response.json({ success: true }, { status: 201 });
   } catch (error) {
