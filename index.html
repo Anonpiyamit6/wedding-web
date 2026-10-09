@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>คำอวยพรวันแต่งงาน N & J</title>
   
+  <!-- ไอคอนโลโก้บนแท็บเบราว์เซอร์ (Favicon) -->
+  <link rel="icon" type="image/png" href="logo.png">
+  
   <!-- นำเข้าฟอนต์ -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,10 +41,9 @@
       position: relative;
     }
 
-    /* เทคนิคทำพื้นหลังโลโก้ให้โปร่งใสกลืนไปกับเว็บ */
     .logo-blend {
       mix-blend-mode: multiply;
-      filter: contrast(1.1); /* ทำให้สีโลโก้เข้มขึ้นนิดนึงสู้กับพื้นหลัง */
+      filter: contrast(1.1); 
     }
 
     .glass-card {
@@ -114,8 +116,8 @@
    <section class="hero-bg relative flex w-full items-center justify-center overflow-hidden min-h-[75vh]">
     <div class="relative z-10 mx-auto w-full max-w-4xl px-6 py-20 text-center flex flex-col items-center">
       
-      <!-- ส่วนของโลโก้ -->
-      <img src="logo.png" alt="NJ Logo" class="logo-blend reveal w-40 md:w-56 mb-8 drop-shadow-sm" onerror="this.src='logo.jpg'">
+      <!-- ปรับขนาดโลโก้ให้เล็กลง ดูแพงขึ้น (w-24 สำหรับมือถือ, md:w-32 สำหรับคอม) -->
+      <img src="logo.png" alt="NJ Logo" class="logo-blend reveal w-24 md:w-32 mb-6 drop-shadow-sm" onerror="this.src='logo.jpg'">
       
       <h1 class="font-modern-thai reveal-delay text-3xl md:text-4xl font-medium leading-[1.6] text-[#4A403A] mb-6">ขอเรียนเชิญร่วมงานมงคลสมรส</h1>
       <div class="flex justify-center items-center gap-4 reveal-delay mb-8">
@@ -139,7 +141,6 @@
 
      <div class="grid items-start gap-12 lg:grid-cols-[1fr_1.2fr]">
       
-      <!-- ฟอร์ม -->
       <form id="wish-form" class="glass-card rounded-[2rem] p-6 sm:p-10 reveal">
        <div class="mb-6">
         <label for="guest-name" class="font-modern-thai mb-2 block font-medium text-[#7A706A]">ชื่อของคุณ</label> 
@@ -151,7 +152,6 @@
         <textarea id="wish-message" class="font-modern-thai font-light field min-h-[140px] w-full resize-y rounded-2xl px-5 py-3.5 text-[#4A403A]" placeholder="เขียนความรู้สึกดีๆ..." required></textarea>
        </div>
 
-       <!-- ส่วนแนบรูปภาพ -->
        <div class="mb-8">
         <p class="font-modern-thai mb-2 block font-medium text-[#7A706A]">แนบรูปภาพ (ไม่บังคับ)</p>
         <label for="image-upload" class="font-modern-thai inline-flex items-center gap-2 px-5 py-3 bg-white text-[#8BA895] rounded-xl cursor-pointer hover:bg-[#F9FAF9] transition font-medium border border-[#E2EFE6] shadow-sm">
@@ -177,7 +177,6 @@
        </div>
       </form>
 
-      <!-- รายการอวยพร -->
       <div class="reveal">
        <div class="mb-8 flex items-end justify-between gap-4 border-b border-[#E2EFE6] pb-4">
         <h2 class="font-modern-thai text-xl font-medium text-[#4A403A]">ข้อความจากแขกผู้มีเกียรติ</h2>
@@ -192,9 +191,8 @@
   </main>
   
   <footer class="w-full py-12 text-center">
-    <!-- โลโก้เล็กๆ ที่ Footer ด้วย -->
     <div class="flex justify-center mb-4">
-      <img src="logo.png" alt="NJ" class="logo-blend w-16 opacity-70" onerror="this.src='logo.jpg'">
+      <img src="logo.png" alt="NJ" class="logo-blend w-12 opacity-70" onerror="this.src='logo.jpg'">
     </div>
     <p class="font-elegant-eng text-xl text-[#8BA895]">Thank you for being part of our story</p>
   </footer>
