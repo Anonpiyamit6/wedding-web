@@ -7,10 +7,14 @@
   
   <link rel="icon" type="image/png" href="logo.png">
   
+  <!-- นำเข้าฟอนต์ -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Noto+Sans+Thai:wght@300;400;500;600&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
   
+  <!-- นำเข้าไลบรารี html2canvas สำหรับทำระบบเซฟรูปโปสการ์ด -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
   <style>
     :root { 
       --bg-cream: #FCF9F2; 
@@ -32,7 +36,6 @@
 
     .logo-blend { mix-blend-mode: multiply; }
 
-    /* แถบ Navbar ด้านบน */
     .navbar {
       background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(10px);
@@ -46,7 +49,6 @@
       align-items: center;
     }
 
-    /* ฟอร์ม */
     .premium-card {
       background: #FFFFFF;
       border-radius: 16px;
@@ -64,7 +66,6 @@
     }
     .btn-pastel:hover { background: #c67c8a; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(216, 140, 154, 0.3);}
 
-    /* รูปโพลารอยด์ */
     .polaroid {
       background: #fff;
       padding: 6px 6px 24px 6px;
@@ -75,13 +76,10 @@
       transition: transform 0.3s;
       cursor: pointer; 
     }
-    @media (min-width: 640px) {
-      .polaroid { padding: 8px 8px 30px 8px; }
-    }
+    @media (min-width: 640px) { .polaroid { padding: 8px 8px 30px 8px; } }
     .polaroid:hover { transform: rotate(0deg) scale(1.05); z-index: 10; }
     .polaroid img { width: 100%; object-fit: cover; background: #f8f8f8; border: 1px solid #f0f0f0; }
 
-    /* กล่องข้อความ */
     .message-bubble {
       background: white;
       border-radius: 12px;
@@ -92,30 +90,20 @@
       width: 100%;
       overflow: hidden;
     }
-    @media (min-width: 640px) {
-      .message-bubble { padding: 24px; }
-    }
+    @media (min-width: 640px) { .message-bubble { padding: 24px; } }
     
-    /* -------------------------------------
-       CSS พิเศษสำหรับการสลับ ซ้าย-ขวา
-    -------------------------------------- */
+    /* เลย์เอาต์สลับ ซ้าย-ขวา */
     .wish-entry {
       display: flex;
-      flex-direction: row; /* บังคับให้อยู่บรรทัดเดียวกันเสมอ */
+      flex-direction: row;
       width: 100%;
       align-items: flex-start;
+      /* เพิ่ม Transition ให้สมูทตอนกระตุกแคปรูป */
+      transition: padding 0.2s, background 0.2s; 
     }
-    /* เมื่อเป็นรายการคู่ (คนที่ 2, 4, 6...) ให้สลับฝั่ง */
-    .wish-entry:nth-child(even) {
-      flex-direction: row-reverse;
-    }
-    /* ให้รูปฝั่งขวาเอียงไปอีกด้าน ให้ดูเป็นธรรมชาติ */
-    .wish-entry:nth-child(even) .polaroid {
-      transform: rotate(2deg);
-    }
-    .wish-entry:nth-child(even) .polaroid:hover {
-      transform: rotate(0deg) scale(1.05);
-    }
+    .wish-entry:nth-child(even) { flex-direction: row-reverse; }
+    .wish-entry:nth-child(even) .polaroid { transform: rotate(2deg); }
+    .wish-entry:nth-child(even) .polaroid:hover { transform: rotate(0deg) scale(1.05); }
 
     input[type="file"] { display: none; }
     .modal-enter { animation: zoomIn 0.3s forwards; }
@@ -130,7 +118,6 @@
     <img src="logo.png" alt="NJ Logo" class="logo-blend h-12 object-contain" onerror="this.src='logo.jpg'">
   </nav>
 
-  <!-- Hero Section -->
   <header class="relative w-full mt-[70px] bg-[var(--bg-cream)]">
     <div class="relative w-full">
       <img src="cover.jpg" alt="Way and Ann" class="w-full h-auto block" onerror="this.src='cover.png'">
@@ -148,7 +135,6 @@
     </div>
   </header>
 
-  <!-- เนื้อหาสมุดอวยพร -->
   <main class="w-full relative z-30 bg-var(--bg-cream)">
    <section id="write-wish" class="w-full px-4 py-8 sm:py-16 sm:px-10">
     <div class="mx-auto w-full max-w-6xl">
@@ -160,7 +146,6 @@
 
      <div class="grid items-start gap-10 lg:grid-cols-[1fr_1.3fr]">
       
-      <!-- ฟอร์มกรอกข้อมูล -->
       <form id="wish-form" class="premium-card">
        <div class="mb-6">
         <label for="guest-name" class="font-modern-thai mb-2 block text-sm font-medium text-[#7A706A]">ชื่อของคุณ</label> 
@@ -197,7 +182,6 @@
        </div>
       </form>
 
-      <!-- รายการอวยพร -->
       <div class="pt-2">
        <div class="mb-6 flex items-end justify-between gap-4 border-b border-[#EAE5D9] pb-3">
         <h2 class="font-modern-thai text-lg font-medium text-[#4A403A]">ข้อความจากแขกผู้มีเกียรติ</h2>
@@ -223,22 +207,27 @@
     <img id="modal-image" src="" alt="ภาพขยาย" class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl modal-enter cursor-default">
   </div>
 
-  <!-- Template สำหรับการ์ดอวยพรแต่ละใบ (สลับฝั่งอัตโนมัติด้วย CSS .wish-entry) -->
+  <!-- Template การ์ดอวยพร (มีปุ่มโหลดรูปซ่อนอยู่) -->
   <template id="wish-template">
-   <div class="wish-entry gap-3 sm:gap-5 mb-2 transition-transform hover:-translate-y-1 duration-300">
-     <!-- รูปโพลารอยด์ (ปรับขนาดให้เล็กหน่อยในมือถือ จะได้ไม่เบียดข้อความ) -->
+   <div class="wish-entry gap-3 sm:gap-5 mb-2 relative group">
      <div data-template-id="image-container" class="w-[100px] sm:w-[150px] flex-shrink-0 hidden pt-1">
        <div class="polaroid w-full mx-auto" title="คลิกเพื่อดูรูปใหญ่">
-         <!-- ควบคุมความสูงรูปให้สมมาตร -->
          <img data-template-id="wish-image" src="" alt="guest photo" class="h-[100px] sm:h-[150px]">
        </div>
      </div>
 
-     <!-- กล่องข้อความ -->
-     <div class="message-bubble">
-       <h3 data-template-id="wish-name" class="font-modern-thai font-medium text-[#D88C9A] text-[15px] sm:text-[16px] mb-1 sm:mb-2 truncate"></h3>
-       <p data-template-id="wish-message" class="font-modern-thai font-light whitespace-pre-wrap leading-relaxed text-[#5A504A] text-[13px] sm:text-[15px] break-words"></p>
-       <div class="mt-3 sm:mt-4 text-right">
+     <div class="message-bubble flex flex-col justify-between">
+       <div>
+         <h3 data-template-id="wish-name" class="font-modern-thai font-medium text-[#D88C9A] text-[15px] sm:text-[16px] mb-1 sm:mb-2 truncate"></h3>
+         <p data-template-id="wish-message" class="font-modern-thai font-light whitespace-pre-wrap leading-relaxed text-[#5A504A] text-[13px] sm:text-[15px] break-words"></p>
+       </div>
+       
+       <!-- ส่วนล่างสุด: ปุ่มดาวน์โหลด และ วันที่ -->
+       <div class="mt-4 pt-3 border-t border-[#F5F5F5] flex justify-between items-end gap-2">
+         <button data-template-id="download-btn" class="text-[#8BA895] hover:text-[#D88C9A] transition flex items-center gap-1.5 text-[11px] sm:text-[12px] font-modern-thai bg-[#F9F9F9] hover:bg-white px-2.5 py-1.5 rounded-md border border-[#E2E2E2] shadow-sm">
+           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+           เซฟโปสการ์ด
+         </button>
          <time data-template-id="wish-date" class="font-modern-thai font-light text-[11px] sm:text-[12px] text-[#A39E9B] tracking-wide"></time>
        </div>
      </div>
@@ -292,18 +281,11 @@
           const MAX_WIDTH = 800; 
           let width = img.width;
           let height = img.height;
-
-          if (width > MAX_WIDTH) {
-            height *= MAX_WIDTH / width;
-            width = MAX_WIDTH;
-          }
-          canvas.width = width;
-          canvas.height = height;
+          if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
+          canvas.width = width; canvas.height = height;
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0, width, height);
-          
           base64Image = canvas.toDataURL('image/jpeg', 0.8);
-          
           imagePreview.src = base64Image;
           imagePreviewContainer.classList.remove('hidden');
         }
@@ -333,25 +315,64 @@
       count.textContent = `${data.length} ข้อความ`;
       data.forEach(record => {
         const card = document.getElementById('wish-template').content.cloneNode(true);
-        card.querySelector('[data-template-id="wish-name"]').textContent = record.guest_name;
-        card.querySelector('[data-template-id="wish-message"]').textContent = record.message;
+        const nameEl = card.querySelector('[data-template-id="wish-name"]');
+        const msgEl = card.querySelector('[data-template-id="wish-message"]');
+        const dateEl = card.querySelector('[data-template-id="wish-date"]');
+        const downloadBtn = card.querySelector('[data-template-id="download-btn"]');
+        const wishEntry = card.querySelector('.wish-entry');
+        
+        nameEl.textContent = record.guest_name;
+        msgEl.textContent = record.message;
         
         if (record.image_base64) {
           const imgContainer = card.querySelector('[data-template-id="image-container"]');
           const imgElement = card.querySelector('[data-template-id="wish-image"]');
-          
           imgElement.src = record.image_base64;
           imgContainer.classList.remove('hidden');
-          
           const polaroidDiv = imgContainer.querySelector('.polaroid');
-          polaroidDiv.addEventListener('click', () => {
-            openModal(record.image_base64);
-          });
+          polaroidDiv.addEventListener('click', () => openModal(record.image_base64));
         }
         
         const parsed = new Date(record.created_at + 'Z'); 
-        card.querySelector('[data-template-id="wish-date"]').textContent = new Intl.DateTimeFormat('th-TH', { dateStyle:'medium', timeStyle:'short' }).format(parsed);
+        dateEl.textContent = new Intl.DateTimeFormat('th-TH', { dateStyle:'medium', timeStyle:'short' }).format(parsed);
         
+        // --- ระบบดาวน์โหลดรูปโปสการ์ด ---
+        downloadBtn.addEventListener('click', async () => {
+          // 1. ซ่อนปุ่มโหลดก่อน เพื่อไม่ให้ติดไปในรูปที่เซฟ
+          downloadBtn.style.display = 'none';
+          
+          // 2. ปรับแต่งให้รูปที่จะเซฟมีพื้นหลังสวยๆ (ไม่โปร่งใส)
+          wishEntry.style.backgroundColor = '#FCF9F2'; // สีครีมเหมือนพื้นหลังเว็บ
+          wishEntry.style.padding = '20px'; // เพิ่มขอบให้ดูเป็นโปสการ์ด
+          wishEntry.style.borderRadius = '16px';
+          
+          try {
+            // สั่งแคปเจอร์
+            const canvas = await html2canvas(wishEntry, {
+              scale: 2, // รูปชัด 2 เท่า
+              useCORS: true,
+              backgroundColor: '#FCF9F2'
+            });
+            
+            // แปลงเป็นไฟล์ JPEG
+            const imageURL = canvas.toDataURL("image/jpeg", 0.95);
+            
+            // สั่งดาวน์โหลดลงเครื่อง
+            const link = document.createElement('a');
+            link.href = imageURL;
+            link.download = `Wish-from-${record.guest_name}.jpg`;
+            link.click();
+          } catch (err) {
+            console.error(err);
+            alert("ขออภัย ไม่สามารถบันทึกรูปได้ในขณะนี้");
+          } finally {
+            // 3. คืนค่าหน้าตากลับเป็นแบบเดิม
+            downloadBtn.style.display = 'flex';
+            wishEntry.style.backgroundColor = 'transparent';
+            wishEntry.style.padding = '0';
+          }
+        });
+
         list.appendChild(card);
       });
     }
