@@ -46,7 +46,7 @@
       align-items: center;
     }
 
-    /* ฟอร์มและกล่องข้อความ */
+    /* ฟอร์ม */
     .premium-card {
       background: #FFFFFF;
       border-radius: 16px;
@@ -64,9 +64,10 @@
     }
     .btn-pastel:hover { background: #c67c8a; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(216, 140, 154, 0.3);}
 
+    /* รูปโพลารอยด์ */
     .polaroid {
       background: #fff;
-      padding: 8px 8px 30px 8px;
+      padding: 6px 6px 24px 6px;
       box-shadow: 0 5px 15px rgba(0,0,0,0.08);
       border-radius: 2px;
       display: inline-block;
@@ -74,20 +75,49 @@
       transition: transform 0.3s;
       cursor: pointer; 
     }
+    @media (min-width: 640px) {
+      .polaroid { padding: 8px 8px 30px 8px; }
+    }
     .polaroid:hover { transform: rotate(0deg) scale(1.05); z-index: 10; }
-    .polaroid img { width: 100%; height: 180px; object-fit: cover; background: #f8f8f8; border: 1px solid #f0f0f0; }
+    .polaroid img { width: 100%; object-fit: cover; background: #f8f8f8; border: 1px solid #f0f0f0; }
 
+    /* กล่องข้อความ */
     .message-bubble {
       background: white;
       border-radius: 12px;
-      padding: 24px;
+      padding: 16px;
       flex-grow: 1;
       box-shadow: 0 4px 15px rgba(0,0,0,0.03);
       border: 1px solid #F0F0F0;
+      width: 100%;
+      overflow: hidden;
+    }
+    @media (min-width: 640px) {
+      .message-bubble { padding: 24px; }
     }
     
-    input[type="file"] { display: none; }
+    /* -------------------------------------
+       CSS พิเศษสำหรับการสลับ ซ้าย-ขวา
+    -------------------------------------- */
+    .wish-entry {
+      display: flex;
+      flex-direction: row; /* บังคับให้อยู่บรรทัดเดียวกันเสมอ */
+      width: 100%;
+      align-items: flex-start;
+    }
+    /* เมื่อเป็นรายการคู่ (คนที่ 2, 4, 6...) ให้สลับฝั่ง */
+    .wish-entry:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+    /* ให้รูปฝั่งขวาเอียงไปอีกด้าน ให้ดูเป็นธรรมชาติ */
+    .wish-entry:nth-child(even) .polaroid {
+      transform: rotate(2deg);
+    }
+    .wish-entry:nth-child(even) .polaroid:hover {
+      transform: rotate(0deg) scale(1.05);
+    }
 
+    input[type="file"] { display: none; }
     .modal-enter { animation: zoomIn 0.3s forwards; }
     @keyframes zoomIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
   </style>
@@ -102,21 +132,14 @@
 
   <!-- Hero Section -->
   <header class="relative w-full mt-[70px] bg-[var(--bg-cream)]">
-    
-    <!-- Wrapper ของรูปภาพที่มีขอบพู่กันซ้อนทับอยู่ด้านล่าง -->
     <div class="relative w-full">
       <img src="cover.jpg" alt="Way and Ann" class="w-full h-auto block" onerror="this.src='cover.png'">
-      
-      <!-- ขอบรอยพู่กันฉีกขาด (Brush edge mask) แปะทับขอบล่างของรูปเป๊ะๆ -->
       <div class="absolute bottom-[-1px] left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" class="w-full block h-[30px] sm:h-[60px] md:h-[100px]">
-          <!-- สีของ Fill ต้องตรงกับ --bg-cream (#FCF9F2) -->
           <path d="M1200,120H0V71.51C83.21,104,181,114.51,281,95.51c107.51-20.44,171.18-80.4,260-84,93.63-3.8,154.21,46,248,51,91.31,4.86,163.66-26.63,227-46.51,64.38-20.2,128.46-37,184-24.51Z" fill="#FCF9F2"></path>
         </svg>
       </div>
     </div>
-
-    <!-- ข้อความและปุ่ม ย้ายลงมาอยู่ใต้รูปรอยพู่กัน -->
     <div class="relative z-20 text-center w-full px-4 pt-6 pb-16">
       <p class="font-modern-thai text-[#7A706A] text-lg sm:text-xl font-light tracking-wide mb-6">ขอเรียนเชิญร่วมงานมงคลสมรส</p>
       <a href="#write-wish" class="font-modern-thai btn-pastel inline-flex items-center rounded-full px-10 py-3.5 text-white font-medium transition duration-300">
@@ -137,6 +160,7 @@
 
      <div class="grid items-start gap-10 lg:grid-cols-[1fr_1.3fr]">
       
+      <!-- ฟอร์มกรอกข้อมูล -->
       <form id="wish-form" class="premium-card">
        <div class="mb-6">
         <label for="guest-name" class="font-modern-thai mb-2 block text-sm font-medium text-[#7A706A]">ชื่อของคุณ</label> 
@@ -156,11 +180,11 @@
         </label>
         <input id="image-upload" type="file" accept="image/*">
         
-        <div id="image-preview-container" class="hidden mt-6">
-           <div class="polaroid w-32 cursor-default">
-             <img id="image-preview" src="" alt="preview">
+        <div id="image-preview-container" class="hidden mt-6 flex items-end gap-3">
+           <div class="polaroid w-28 sm:w-32 cursor-default">
+             <img id="image-preview" src="" alt="preview" class="h-[120px] sm:h-[140px]">
            </div>
-           <button type="button" id="remove-image" class="font-modern-thai block mt-2 text-sm text-[#D88C9A] hover:text-red-500 transition">ลบรูปภาพ ✕</button>
+           <button type="button" id="remove-image" class="font-modern-thai block text-sm text-[#D88C9A] hover:text-red-500 transition mb-2">ลบรูปภาพ ✕</button>
         </div>
        </div>
 
@@ -173,12 +197,13 @@
        </div>
       </form>
 
+      <!-- รายการอวยพร -->
       <div class="pt-2">
        <div class="mb-6 flex items-end justify-between gap-4 border-b border-[#EAE5D9] pb-3">
         <h2 class="font-modern-thai text-lg font-medium text-[#4A403A]">ข้อความจากแขกผู้มีเกียรติ</h2>
         <span id="wish-count" class="font-modern-thai text-sm text-[#8BA895]"></span>
        </div>
-       <div id="wish-list" class="flex flex-col gap-6 max-h-[700px] overflow-y-auto pr-3 pb-10" style="scrollbar-width: thin; scrollbar-color: #D88C9A transparent;"></div>
+       <div id="wish-list" class="flex flex-col gap-6 max-h-[700px] overflow-y-auto overflow-x-hidden pr-3 pb-10" style="scrollbar-width: thin; scrollbar-color: #D88C9A transparent;"></div>
       </div>
 
      </div>
@@ -198,19 +223,23 @@
     <img id="modal-image" src="" alt="ภาพขยาย" class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl modal-enter cursor-default">
   </div>
 
+  <!-- Template สำหรับการ์ดอวยพรแต่ละใบ (สลับฝั่งอัตโนมัติด้วย CSS .wish-entry) -->
   <template id="wish-template">
-   <div class="flex flex-col sm:flex-row gap-5 items-start w-full">
-     <div data-template-id="image-container" class="w-full sm:w-36 flex-shrink-0 hidden pt-1">
-       <div class="polaroid w-full max-w-[150px] mx-auto sm:mx-0" title="คลิกเพื่อดูรูปใหญ่">
-         <img data-template-id="wish-image" src="" alt="guest photo">
+   <div class="wish-entry gap-3 sm:gap-5 mb-2 transition-transform hover:-translate-y-1 duration-300">
+     <!-- รูปโพลารอยด์ (ปรับขนาดให้เล็กหน่อยในมือถือ จะได้ไม่เบียดข้อความ) -->
+     <div data-template-id="image-container" class="w-[100px] sm:w-[150px] flex-shrink-0 hidden pt-1">
+       <div class="polaroid w-full mx-auto" title="คลิกเพื่อดูรูปใหญ่">
+         <!-- ควบคุมความสูงรูปให้สมมาตร -->
+         <img data-template-id="wish-image" src="" alt="guest photo" class="h-[100px] sm:h-[150px]">
        </div>
      </div>
 
-     <div class="message-bubble w-full">
-       <h3 data-template-id="wish-name" class="font-modern-thai font-medium text-[#D88C9A] text-[16px] mb-2"></h3>
-       <p data-template-id="wish-message" class="font-modern-thai font-light whitespace-pre-wrap leading-relaxed text-[#5A504A] text-[15px]"></p>
-       <div class="mt-4 text-right">
-         <time data-template-id="wish-date" class="font-modern-thai font-light text-[12px] text-[#A39E9B] tracking-wide"></time>
+     <!-- กล่องข้อความ -->
+     <div class="message-bubble">
+       <h3 data-template-id="wish-name" class="font-modern-thai font-medium text-[#D88C9A] text-[15px] sm:text-[16px] mb-1 sm:mb-2 truncate"></h3>
+       <p data-template-id="wish-message" class="font-modern-thai font-light whitespace-pre-wrap leading-relaxed text-[#5A504A] text-[13px] sm:text-[15px] break-words"></p>
+       <div class="mt-3 sm:mt-4 text-right">
+         <time data-template-id="wish-date" class="font-modern-thai font-light text-[11px] sm:text-[12px] text-[#A39E9B] tracking-wide"></time>
        </div>
      </div>
    </div>
