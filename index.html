@@ -46,25 +46,6 @@
       align-items: center;
     }
 
-    /* รอยต่อแบบรอยพู่กัน */
-    .brush-edge {
-      position: absolute;
-      bottom: -1px; 
-      left: 0;
-      width: 100%;
-      overflow: hidden;
-      line-height: 0;
-      transform: rotate(180deg);
-      z-index: 20;
-    }
-    .brush-edge svg {
-      position: relative;
-      display: block;
-      width: calc(100% + 1.3px);
-      height: 60px; 
-    }
-    .brush-edge .shape-fill { fill: var(--bg-cream); }
-
     /* ฟอร์มและกล่องข้อความ */
     .premium-card {
       background: #FFFFFF;
@@ -120,35 +101,33 @@
   </nav>
 
   <!-- Hero Section -->
-  <!-- เปลี่ยนพื้นหลังให้สีกลืนกับรูปสตูดิโอ และยืดความสูงแบบอัตโนมัติ -->
-  <header class="relative w-full mt-[70px] flex flex-col items-center bg-[#F9F9F9] pt-0 pb-32 sm:pb-40 overflow-hidden">
+  <header class="relative w-full mt-[70px] bg-[var(--bg-cream)]">
     
-    <!-- รูปปกแบบรักษาอัตราส่วน (ไม่ครอป, ลดความสูงสูงสุดไม่ให้ล้นจอ) -->
-    <div class="relative w-full z-10 flex justify-center">
-      <img src="cover.jpg" alt="Way and Ann" class="w-full h-auto max-h-[75vh] object-contain object-top" onerror="this.src='cover.png'">
+    <!-- Wrapper ของรูปภาพที่มีขอบพู่กันซ้อนทับอยู่ด้านล่าง -->
+    <div class="relative w-full">
+      <img src="cover.jpg" alt="Way and Ann" class="w-full h-auto block" onerror="this.src='cover.png'">
+      
+      <!-- ขอบรอยพู่กันฉีกขาด (Brush edge mask) แปะทับขอบล่างของรูปเป๊ะๆ -->
+      <div class="absolute bottom-[-1px] left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" class="w-full block h-[30px] sm:h-[60px] md:h-[100px]">
+          <!-- สีของ Fill ต้องตรงกับ --bg-cream (#FCF9F2) -->
+          <path d="M1200,120H0V71.51C83.21,104,181,114.51,281,95.51c107.51-20.44,171.18-80.4,260-84,93.63-3.8,154.21,46,248,51,91.31,4.86,163.66-26.63,227-46.51,64.38-20.2,128.46-37,184-24.51Z" fill="#FCF9F2"></path>
+        </svg>
+      </div>
     </div>
-    
-    <!-- ย้ายข้อความและปุ่มลงมาข้างล่างรูป เพื่อไม่ให้บังหน้าบ่าวสาว -->
-    <div class="relative z-20 text-center w-full px-4 mt-10 sm:mt-12">
+
+    <!-- ข้อความและปุ่ม ย้ายลงมาอยู่ใต้รูปรอยพู่กัน -->
+    <div class="relative z-20 text-center w-full px-4 pt-6 pb-16">
       <p class="font-modern-thai text-[#7A706A] text-lg sm:text-xl font-light tracking-wide mb-6">ขอเรียนเชิญร่วมงานมงคลสมรส</p>
       <a href="#write-wish" class="font-modern-thai btn-pastel inline-flex items-center rounded-full px-10 py-3.5 text-white font-medium transition duration-300">
         ร่วมอวยพรบ่าวสาว 🤍
       </a>
     </div>
-
-    <!-- รอยต่อขอบพู่กัน -->
-    <div class="brush-edge">
-      <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-        <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" class="shape-fill"></path>
-        <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-23.65V0Z" opacity=".5" class="shape-fill"></path>
-        <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" class="shape-fill"></path>
-      </svg>
-    </div>
   </header>
 
   <!-- เนื้อหาสมุดอวยพร -->
   <main class="w-full relative z-30 bg-var(--bg-cream)">
-   <section id="write-wish" class="w-full px-4 py-16 sm:py-24 sm:px-10">
+   <section id="write-wish" class="w-full px-4 py-8 sm:py-16 sm:px-10">
     <div class="mx-auto w-full max-w-6xl">
      
      <div class="mb-16 text-center">
@@ -185,7 +164,7 @@
         </div>
        </div>
 
-       <button id="submit-button" class="font-modern-thai btn-pastel w-full rounded-xl px-6 py-4 font-medium text-[15px] tracking-wide" type="submit">ส่งข้อความอวยพร 🤍</button>
+       <button id="submit-button" class="font-modern-thai btn-pastel w-full rounded-xl px-6 py-4 font-medium text-[15px] tracking-wide" type="submit">ส่งข้อความ 🤍</button>
        
        <div class="font-modern-thai mt-5 h-6 text-center text-sm font-medium">
          <p id="sending-status" class="hidden text-[#8BA895]">กำลังส่งข้อมูล...</p>
@@ -377,7 +356,7 @@
         showStatus('error-status');
       } finally {
         submitButton.disabled = false;
-        submitButton.innerHTML = "ส่งข้อความอวยพร 🤍";
+        submitButton.innerHTML = "ส่งข้อความ 🤍";
         setTimeout(() => { document.getElementById('success-status').classList.add('hidden'); }, 3000);
       }
     });
