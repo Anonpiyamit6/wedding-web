@@ -17,7 +17,7 @@
       --pink-dark: #D88C9A;
       --green-pastel: #E2EFE6; 
       --green-dark: #8BA895;
-      --text-main: #4A403A; /* ปรับสีตัวอักษรให้ดูซอฟต์ลงนิดนึง */
+      --text-main: #4A403A; 
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -30,7 +30,6 @@
       background-size: 40px 40px;
     }
     
-    /* ฟอนต์ใหม่ที่เพิ่มเข้ามา */
     .font-modern-thai { font-family: 'Prompt', sans-serif; letter-spacing: 0.5px; }
     .font-elegant-eng { font-family: 'Cormorant Garamond', serif; font-style: italic; }
     
@@ -57,7 +56,7 @@
     }
     .btn-pastel:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(216, 140, 154, 0.4);}
 
-    /* สไตล์รูปโพลารอยด์ */
+    /* สไตล์รูปโพลารอยด์ พร้อมทำให้คลิกได้ */
     .polaroid {
       background: #fff;
       padding: 10px 10px 35px 10px;
@@ -65,9 +64,10 @@
       border-radius: 2px;
       display: inline-block;
       transform: rotate(-2deg);
-      transition: transform 0.3s ease;
+      transition: all 0.3s ease;
+      cursor: pointer; /* เปลี่ยนเมาส์เป็นรูปมือตอนชี้ */
     }
-    .polaroid:hover { transform: rotate(0deg) scale(1.02); z-index: 10;}
+    .polaroid:hover { transform: rotate(0deg) scale(1.05); z-index: 10; box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
     .polaroid img {
       width: 100%;
       height: 200px;
@@ -93,6 +93,13 @@
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* แอนิเมชันสำหรับกรอบดูรูปใหญ่ (Modal) */
+    .modal-enter { animation: zoomIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    @keyframes zoomIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
     }
   </style>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
@@ -147,7 +154,7 @@
         <input id="image-upload" type="file" accept="image/*">
         
         <div id="image-preview-container" class="hidden mt-6">
-           <div class="polaroid w-40">
+           <div class="polaroid w-40 cursor-default">
              <img id="image-preview" src="" alt="preview">
            </div>
            <button type="button" id="remove-image" class="font-modern-thai block mt-3 text-sm text-[#D88C9A] hover:text-red-500 transition">ลบรูปภาพ ✕</button>
@@ -181,12 +188,18 @@
     <p class="font-elegant-eng text-2xl text-[#8BA895]">Thank you for being part of our story</p>
   </footer>
 
+  <!-- ส่วนของ Popup ดูรูปใหญ่ (ซ่อนไว้ก่อน) -->
+  <div id="image-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 transition-opacity cursor-pointer">
+    <button id="close-modal" class="absolute top-6 right-6 md:top-10 md:right-10 text-white hover:text-[#D88C9A] transition text-4xl">&times;</button>
+    <img id="modal-image" src="" alt="ภาพขยาย" class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl modal-enter cursor-default">
+  </div>
+
   <!-- Template สำหรับการ์ด 1 ใบ -->
   <template id="wish-template">
    <div class="flex flex-col sm:flex-row gap-5 items-start w-full transition-transform hover:-translate-y-1 duration-300">
-     <!-- รูปโพลารอยด์ -->
+     <!-- รูปโพลารอยด์ (เพิ่ม title เพื่อบอกว่าคลิกได้) -->
      <div data-template-id="image-container" class="w-full sm:w-48 flex-shrink-0 hidden pt-2">
-       <div class="polaroid w-full max-w-[180px] mx-auto sm:mx-0">
+       <div class="polaroid w-full max-w-[180px] mx-auto sm:mx-0" title="คลิกเพื่อดูรูปใหญ่">
          <img data-template-id="wish-image" src="" alt="guest photo">
        </div>
      </div>
@@ -212,7 +225,31 @@
     const imagePreview = document.getElementById('image-preview');
     const removeImageBtn = document.getElementById('remove-image');
     
+    // ตัวแปรสำหรับ Popup ดูรูป
+    const imageModal = document.getElementById('image-modal');
+    const modalImage = document.getElementById('modal-image');
+    const closeModalBtn = document.getElementById('close-modal');
+    
     let base64Image = null;
+
+    // ฟังก์ชันเปิด/ปิด Popup รูป
+    function openModal(imgSrc) {
+      modalImage.src = imgSrc;
+      imageModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden'; // ล็อกไม่ให้หน้าเว็บเลื่อนตอนดูรูป
+    }
+    
+    function closeModal() {
+      imageModal.classList.add('hidden');
+      setTimeout(() => { modalImage.src = ''; }, 300);
+      document.body.style.overflow = ''; // ปลดล็อกให้เลื่อนหน้าเว็บได้
+    }
+
+    // กดปิด Popup ได้ 2 ทาง: กดปุ่มกากบาท หรือ คลิกพื้นหลังสีดำ
+    closeModalBtn.addEventListener('click', closeModal);
+    imageModal.addEventListener('click', (e) => {
+      if (e.target === imageModal) closeModal();
+    });
 
     imageInput.addEventListener('change', function(event) {
       const file = event.target.files[0];
@@ -225,7 +262,7 @@
         img.src = e.target.result;
         img.onload = function() {
           const canvas = document.createElement('canvas');
-          const MAX_WIDTH = 600; 
+          const MAX_WIDTH = 800; // ปรับขนาดรูปให้ชัดขึ้นนิดนึงเวลาขยายดู
           let width = img.width;
           let height = img.height;
 
@@ -238,7 +275,7 @@
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0, width, height);
           
-          base64Image = canvas.toDataURL('image/jpeg', 0.7);
+          base64Image = canvas.toDataURL('image/jpeg', 0.8);
           
           imagePreview.src = base64Image;
           imagePreviewContainer.classList.remove('hidden');
@@ -275,8 +312,15 @@
         if (record.image_base64) {
           const imgContainer = card.querySelector('[data-template-id="image-container"]');
           const imgElement = card.querySelector('[data-template-id="wish-image"]');
+          
           imgElement.src = record.image_base64;
           imgContainer.classList.remove('hidden');
+          
+          // เพิ่ม Event ให้กดรูปแล้วเปิด Popup
+          const polaroidDiv = imgContainer.querySelector('.polaroid');
+          polaroidDiv.addEventListener('click', () => {
+            openModal(record.image_base64);
+          });
         }
         
         const parsed = new Date(record.created_at + 'Z'); 
