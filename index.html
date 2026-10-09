@@ -7,12 +7,11 @@
   
   <link rel="icon" type="image/png" href="logo.png">
   
-  <!-- นำเข้าฟอนต์ -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Noto+Sans+Thai:wght@300;400;500;600&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
   
-  <!-- นำเข้าไลบรารี html2canvas สำหรับทำระบบเซฟรูปโปสการ์ด -->
+  <!-- html2canvas สำหรับโหลดรูป -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
   <style>
@@ -66,6 +65,7 @@
     }
     .btn-pastel:hover { background: #c67c8a; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(216, 140, 154, 0.3);}
 
+    /* จัดการรูปโพลารอยด์ให้เป็น 4x6 (สัดส่วน 2:3) */
     .polaroid {
       background: #fff;
       padding: 6px 6px 24px 6px;
@@ -75,10 +75,19 @@
       transform: rotate(-1.5deg);
       transition: transform 0.3s;
       cursor: pointer; 
+      width: 100%;
     }
     @media (min-width: 640px) { .polaroid { padding: 8px 8px 30px 8px; } }
     .polaroid:hover { transform: rotate(0deg) scale(1.05); z-index: 10; }
-    .polaroid img { width: 100%; object-fit: cover; background: #f8f8f8; border: 1px solid #f0f0f0; }
+    
+    /* พระเอกของการแก้รูปเบี้ยวอยู่ตรงนี้ครับ! */
+    .polaroid img { 
+      width: 100%; 
+      aspect-ratio: 2 / 3; /* บังคับสัดส่วน 4x6 เสมอ */
+      object-fit: cover;   /* ถ้ารูปยาวไปให้ตัดขอบอัตโนมัติ ห้ามบีบรูป! */
+      background: #f8f8f8; 
+      border: 1px solid #f0f0f0; 
+    }
 
     .message-bubble {
       background: white;
@@ -92,13 +101,11 @@
     }
     @media (min-width: 640px) { .message-bubble { padding: 24px; } }
     
-    /* เลย์เอาต์สลับ ซ้าย-ขวา */
     .wish-entry {
       display: flex;
       flex-direction: row;
       width: 100%;
       align-items: flex-start;
-      /* เพิ่ม Transition ให้สมูทตอนกระตุกแคปรูป */
       transition: padding 0.2s, background 0.2s; 
     }
     .wish-entry:nth-child(even) { flex-direction: row-reverse; }
@@ -161,13 +168,13 @@
         <p class="font-modern-thai mb-2 block text-sm font-medium text-[#7A706A]">แนบรูปภาพ (ไม่บังคับ)</p>
         <label for="image-upload" class="font-modern-thai inline-flex items-center gap-2 px-5 py-3 bg-[#F9F9F9] text-[#8BA895] rounded-xl cursor-pointer hover:bg-[#F0F0F0] transition font-medium border border-[#E2E2E2] text-sm">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
-          เลือกรูปภาพโพลารอยด์
+          เลือกรูปภาพ (4x6)
         </label>
         <input id="image-upload" type="file" accept="image/*">
         
         <div id="image-preview-container" class="hidden mt-6 flex items-end gap-3">
-           <div class="polaroid w-28 sm:w-32 cursor-default">
-             <img id="image-preview" src="" alt="preview" class="h-[120px] sm:h-[140px]">
+           <div class="polaroid w-24 sm:w-28 cursor-default">
+             <img id="image-preview" src="" alt="preview">
            </div>
            <button type="button" id="remove-image" class="font-modern-thai block text-sm text-[#D88C9A] hover:text-red-500 transition mb-2">ลบรูปภาพ ✕</button>
         </div>
@@ -183,9 +190,16 @@
       </form>
 
       <div class="pt-2">
-       <div class="mb-6 flex items-end justify-between gap-4 border-b border-[#EAE5D9] pb-3">
+       <div class="mb-6 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 border-b border-[#EAE5D9] pb-3">
         <h2 class="font-modern-thai text-lg font-medium text-[#4A403A]">ข้อความจากแขกผู้มีเกียรติ</h2>
-        <span id="wish-count" class="font-modern-thai text-sm text-[#8BA895]"></span>
+        
+        <!-- ส่วนบอกจำนวน และ ปุ่มโหลดทั้งหมด -->
+        <div class="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+          <span id="wish-count" class="font-modern-thai text-sm text-[#8BA895]"></span>
+          <button id="download-all-btn" class="font-modern-thai text-xs sm:text-sm bg-white text-[#D88C9A] border border-[#D88C9A] px-3 py-1.5 rounded-lg shadow-sm hover:bg-[#D88C9A] hover:text-white transition">
+            โหลดเก็บทั้งหมด 💾
+          </button>
+        </div>
        </div>
        <div id="wish-list" class="flex flex-col gap-6 max-h-[700px] overflow-y-auto overflow-x-hidden pr-3 pb-10" style="scrollbar-width: thin; scrollbar-color: #D88C9A transparent;"></div>
       </div>
@@ -207,12 +221,12 @@
     <img id="modal-image" src="" alt="ภาพขยาย" class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl modal-enter cursor-default">
   </div>
 
-  <!-- Template การ์ดอวยพร (มีปุ่มโหลดรูปซ่อนอยู่) -->
   <template id="wish-template">
    <div class="wish-entry gap-3 sm:gap-5 mb-2 relative group">
-     <div data-template-id="image-container" class="w-[100px] sm:w-[150px] flex-shrink-0 hidden pt-1">
+     <!-- ปรับขนาดกรอบโพลารอยด์ให้พอดีกับ 4x6 -->
+     <div data-template-id="image-container" class="w-[110px] sm:w-[160px] flex-shrink-0 hidden pt-1">
        <div class="polaroid w-full mx-auto" title="คลิกเพื่อดูรูปใหญ่">
-         <img data-template-id="wish-image" src="" alt="guest photo" class="h-[100px] sm:h-[150px]">
+         <img data-template-id="wish-image" src="" alt="guest photo">
        </div>
      </div>
 
@@ -222,11 +236,11 @@
          <p data-template-id="wish-message" class="font-modern-thai font-light whitespace-pre-wrap leading-relaxed text-[#5A504A] text-[13px] sm:text-[15px] break-words"></p>
        </div>
        
-       <!-- ส่วนล่างสุด: ปุ่มดาวน์โหลด และ วันที่ -->
        <div class="mt-4 pt-3 border-t border-[#F5F5F5] flex justify-between items-end gap-2">
+         <!-- ปุ่มโหลดเดี่ยว -->
          <button data-template-id="download-btn" class="text-[#8BA895] hover:text-[#D88C9A] transition flex items-center gap-1.5 text-[11px] sm:text-[12px] font-modern-thai bg-[#F9F9F9] hover:bg-white px-2.5 py-1.5 rounded-md border border-[#E2E2E2] shadow-sm">
            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-           เซฟโปสการ์ด
+           เซฟเดี่ยว
          </button>
          <time data-template-id="wish-date" class="font-modern-thai font-light text-[11px] sm:text-[12px] text-[#A39E9B] tracking-wide"></time>
        </div>
@@ -243,6 +257,7 @@
     const imagePreviewContainer = document.getElementById('image-preview-container');
     const imagePreview = document.getElementById('image-preview');
     const removeImageBtn = document.getElementById('remove-image');
+    const downloadAllBtn = document.getElementById('download-all-btn');
     
     const imageModal = document.getElementById('image-modal');
     const modalImage = document.getElementById('modal-image');
@@ -310,6 +325,30 @@
       renderWishes(data);
     }
 
+    // ฟังก์ชันใช้แคปรูปที่ถูกนำมาใช้ทั้งปุ่มเดี่ยวและปุ่มรวม
+    async function captureAndDownload(wishEntry, guestName, index = "") {
+      const dlBtn = wishEntry.querySelector('[data-template-id="download-btn"]');
+      dlBtn.style.display = 'none';
+      wishEntry.style.backgroundColor = '#FCF9F2';
+      wishEntry.style.padding = '20px';
+      wishEntry.style.borderRadius = '16px';
+      
+      try {
+        const canvas = await html2canvas(wishEntry, { scale: 2, useCORS: true, backgroundColor: '#FCF9F2' });
+        const imageURL = canvas.toDataURL("image/jpeg", 0.95);
+        const link = document.createElement('a');
+        link.href = imageURL;
+        link.download = `Wish${index ? '-'+index : ''}-${guestName}.jpg`;
+        link.click();
+      } catch (err) {
+        console.error(err);
+      } finally {
+        dlBtn.style.display = 'flex';
+        wishEntry.style.backgroundColor = 'transparent';
+        wishEntry.style.padding = '0';
+      }
+    }
+
     function renderWishes(data) {
       list.innerHTML = ''; 
       count.textContent = `${data.length} ข้อความ`;
@@ -336,46 +375,40 @@
         const parsed = new Date(record.created_at + 'Z'); 
         dateEl.textContent = new Intl.DateTimeFormat('th-TH', { dateStyle:'medium', timeStyle:'short' }).format(parsed);
         
-        // --- ระบบดาวน์โหลดรูปโปสการ์ด ---
-        downloadBtn.addEventListener('click', async () => {
-          // 1. ซ่อนปุ่มโหลดก่อน เพื่อไม่ให้ติดไปในรูปที่เซฟ
-          downloadBtn.style.display = 'none';
-          
-          // 2. ปรับแต่งให้รูปที่จะเซฟมีพื้นหลังสวยๆ (ไม่โปร่งใส)
-          wishEntry.style.backgroundColor = '#FCF9F2'; // สีครีมเหมือนพื้นหลังเว็บ
-          wishEntry.style.padding = '20px'; // เพิ่มขอบให้ดูเป็นโปสการ์ด
-          wishEntry.style.borderRadius = '16px';
-          
-          try {
-            // สั่งแคปเจอร์
-            const canvas = await html2canvas(wishEntry, {
-              scale: 2, // รูปชัด 2 เท่า
-              useCORS: true,
-              backgroundColor: '#FCF9F2'
-            });
-            
-            // แปลงเป็นไฟล์ JPEG
-            const imageURL = canvas.toDataURL("image/jpeg", 0.95);
-            
-            // สั่งดาวน์โหลดลงเครื่อง
-            const link = document.createElement('a');
-            link.href = imageURL;
-            link.download = `Wish-from-${record.guest_name}.jpg`;
-            link.click();
-          } catch (err) {
-            console.error(err);
-            alert("ขออภัย ไม่สามารถบันทึกรูปได้ในขณะนี้");
-          } finally {
-            // 3. คืนค่าหน้าตากลับเป็นแบบเดิม
-            downloadBtn.style.display = 'flex';
-            wishEntry.style.backgroundColor = 'transparent';
-            wishEntry.style.padding = '0';
-          }
-        });
+        // ปุ่มเซฟเดี่ยว
+        downloadBtn.addEventListener('click', () => captureAndDownload(wishEntry, record.guest_name));
 
         list.appendChild(card);
       });
     }
+
+    // --- ระบบโหลดทั้งหมด (Bulk Download) ---
+    downloadAllBtn.addEventListener('click', async () => {
+      const entries = document.querySelectorAll('.wish-entry');
+      if(entries.length === 0) return alert('ยังไม่มีข้อความใหโหลดครับ');
+      
+      const confirmDownload = confirm(`ต้องการดาวน์โหลดโปสการ์ดทั้งหมด ${entries.length} ภาพ ใช่หรือไม่?\n(ระบบจะค่อยๆ เซฟทีละภาพจนครบครับ)`);
+      if(!confirmDownload) return;
+
+      downloadAllBtn.innerHTML = 'กำลังเตรียมไฟล์... ⏳';
+      downloadAllBtn.disabled = true;
+
+      for (let i = 0; i < entries.length; i++) {
+          const entry = entries[i];
+          const name = entry.querySelector('[data-template-id="wish-name"]').textContent;
+          
+          await captureAndDownload(entry, name, i+1);
+          
+          // หน่วงเวลา 800ms ระหว่างการโหลดแต่ละรูป ป้องกันเบราว์เซอร์บล็อกการโหลดรัวๆ
+          await new Promise(resolve => setTimeout(resolve, 800));
+      }
+
+      downloadAllBtn.innerHTML = 'โหลดสำเร็จ! ✅';
+      setTimeout(() => { 
+        downloadAllBtn.innerHTML = 'โหลดเก็บทั้งหมด 💾'; 
+        downloadAllBtn.disabled = false; 
+      }, 3000);
+    });
 
     form.addEventListener('submit', async event => {
       event.preventDefault();
