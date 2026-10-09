@@ -5,10 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>คำอวยพรวันแต่งงาน Way & Ann</title>
   
-  <!-- ไอคอนโลโก้บนแท็บเบราว์เซอร์ (Favicon) -->
   <link rel="icon" type="image/png" href="logo.png">
   
-  <!-- นำเข้าฟอนต์ -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Noto+Sans+Thai:wght@300;400;500&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -91,7 +89,7 @@
     input[type="file"] { display: none; }
 
     .reveal { animation: fadeUp 1s ease-out forwards; opacity: 0; }
-    .reveal-delay { animation: fadeUp 1s ease-out 0.5s forwards; opacity: 0; }
+    .reveal-delay { animation: fadeUp 1s ease-out 0.4s forwards; opacity: 0; }
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -108,22 +106,22 @@
 
  <body class="w-full">
   
-  <!-- ส่วนปก (Cover) เปลี่ยนเป็นรูปภาพเต็มตา -->
-  <header class="w-full bg-white shadow-sm relative">
-    <div class="w-full max-w-[1400px] mx-auto reveal">
-      <!-- ดึงรูป cover.jpg มาแสดงตรงนี้ -->
-      <img src="cover.jpg" alt="Way and Ann Wedding Cover" class="w-full h-auto max-h-[85vh] object-cover object-top" onerror="this.src='cover.png'">
+  <!-- ส่วนปก (Cover) ปรับให้รูปแสดง 100% แบบไม่มีทางโดนตัดขอบ -->
+  <header class="w-full relative">
+    <div class="w-full max-w-5xl mx-auto reveal pt-8 sm:pt-12 px-4 md:px-8">
+      <!-- รูปภาพจะย่อ-ขยายตามสัดส่วนจริง พร้อมขอบมนและเงาสวยๆ -->
+      <img src="cover.jpg" alt="Way and Ann Wedding Cover" class="w-full h-auto rounded-xl shadow-lg border-4 border-white" onerror="this.src='cover.png'">
     </div>
     
     <!-- ปุ่มเลื่อนลงมาอวยพร -->
-    <div class="w-full text-center py-12 bg-gradient-to-b from-white to-[var(--cream)] reveal-delay">
+    <div class="w-full text-center py-10 sm:py-14 reveal-delay">
       <p class="font-modern-thai font-light text-base md:text-lg text-[#7A706A] mb-6 px-4">ร่วมแสดงความยินดีและเป็นสักขีพยานในวันสำคัญของเรา</p>
       <a href="#write-wish" class="font-modern-thai btn-pastel inline-flex items-center rounded-full px-12 py-3.5 font-medium tracking-wide">ร่วมอวยพรบ่าวสาว 🤍</a>
     </div>
   </header>
 
   <main class="w-full">
-   <section id="write-wish" class="w-full px-4 py-16 sm:px-10">
+   <section id="write-wish" class="w-full px-4 py-8 sm:px-10">
     <div class="mx-auto w-full max-w-6xl">
      <div class="mb-14 text-center reveal">
       <p class="font-elegant-eng text-4xl text-[#8BA895] mb-3">Guestbook</p>
@@ -132,7 +130,6 @@
 
      <div class="grid items-start gap-12 lg:grid-cols-[1fr_1.2fr]">
       
-      <!-- ฟอร์ม -->
       <form id="wish-form" class="glass-card rounded-[2rem] p-6 sm:p-10 reveal">
        <div class="mb-6">
         <label for="guest-name" class="font-modern-thai mb-2 block font-medium text-[#7A706A]">ชื่อของคุณ</label> 
@@ -144,7 +141,6 @@
         <textarea id="wish-message" class="font-modern-thai font-light field min-h-[140px] w-full resize-y rounded-2xl px-5 py-3.5 text-[#4A403A]" placeholder="เขียนความรู้สึกดีๆ..." required></textarea>
        </div>
 
-       <!-- ส่วนแนบรูปภาพ -->
        <div class="mb-8">
         <p class="font-modern-thai mb-2 block font-medium text-[#7A706A]">แนบรูปภาพ (ไม่บังคับ)</p>
         <label for="image-upload" class="font-modern-thai inline-flex items-center gap-2 px-5 py-3 bg-white text-[#8BA895] rounded-xl cursor-pointer hover:bg-[#F9FAF9] transition font-medium border border-[#E2EFE6] shadow-sm">
@@ -170,7 +166,6 @@
        </div>
       </form>
 
-      <!-- รายการอวยพร -->
       <div class="reveal">
        <div class="mb-8 flex items-end justify-between gap-4 border-b border-[#E2EFE6] pb-4">
         <h2 class="font-modern-thai text-xl font-medium text-[#4A403A]">ข้อความจากแขกผู้มีเกียรติ</h2>
