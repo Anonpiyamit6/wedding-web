@@ -19,6 +19,7 @@
       --green-pastel: #E2EFE6; 
       --green-dark: #8BA895;
       --text-main: #4A403A; 
+      --bg-header: #F7F7F7; /* สีพื้นหลังส่วนหัว คลีนๆ เข้ากับรูปสตูดิโอ */
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -26,72 +27,83 @@
       margin: 0; 
       font-family: 'Noto Sans Thai', sans-serif; 
       color: var(--text-main); 
-      background-color: var(--cream);
-      background-image: radial-gradient(var(--pink-pastel) 1px, transparent 1px);
-      background-size: 40px 40px;
+      background-color: var(--bg-header); /* ให้ค่าเริ่มต้นเป็นสีคลีนๆ */
     }
     
     .font-modern-thai { font-family: 'Prompt', sans-serif; letter-spacing: 0.5px; }
     .font-elegant-eng { font-family: 'Cormorant Garamond', serif; font-style: italic; }
+
+    /* โซนสมุดอวยพร ค่อยใส่ลายจุด */
+    .guestbook-wrapper {
+      background-color: var(--cream);
+      background-image: radial-gradient(var(--pink-pastel) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
 
     .logo-blend {
       mix-blend-mode: multiply;
       filter: contrast(1.1); 
     }
 
+    /* สไตล์ฟอร์ม ปรับให้ดูเป็นกระดาษพรีเมียม */
     .glass-card {
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.5);
-      box-shadow: 0 15px 35px rgba(216, 140, 154, 0.1);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 1);
+      box-shadow: 0 25px 50px rgba(216, 140, 154, 0.05), 0 10px 15px rgba(0,0,0,0.02);
     }
-    .field { border: 2px solid #F0EBE1; background: #FFFFFF; transition: all 0.3s; }
-    .field:focus { border-color: var(--pink-dark); outline: none; box-shadow: 0 0 0 4px rgba(216, 140, 154, 0.1); }
+    .field { border: 1.5px solid #EAE5D9; background: #FAFAFA; transition: all 0.3s; }
+    .field:focus { border-color: var(--pink-dark); outline: none; background: #FFFFFF; box-shadow: 0 0 0 4px rgba(216, 140, 154, 0.08); }
     
+    /* ปุ่มสไตล์มินิมอลหรูหรา */
     .btn-pastel {
       background: linear-gradient(135deg, var(--pink-dark), #e29caa);
       color: white;
-      box-shadow: 0 4px 15px rgba(216, 140, 154, 0.3);
-      transition: all 0.3s ease;
+      box-shadow: 0 10px 20px rgba(216, 140, 154, 0.25);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       cursor: pointer;
     }
-    .btn-pastel:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(216, 140, 154, 0.4);}
+    .btn-pastel:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(216, 140, 154, 0.35);}
 
+    /* รูปโพลารอยด์ */
     .polaroid {
       background: #fff;
-      padding: 10px 10px 35px 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04);
+      padding: 8px 8px 30px 8px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05), 0 2px 5px rgba(0,0,0,0.02);
       border-radius: 2px;
       display: inline-block;
-      transform: rotate(-2deg);
-      transition: all 0.3s ease;
+      transform: rotate(-1.5deg);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       cursor: pointer; 
     }
-    .polaroid:hover { transform: rotate(0deg) scale(1.05); z-index: 10; box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
+    .polaroid:hover { transform: rotate(0deg) scale(1.06); z-index: 10; box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
     .polaroid img {
       width: 100%;
-      height: 200px;
+      height: 180px;
       object-fit: cover;
       background: #f8f8f8;
-      border: 1px solid #f0f0f0;
+      border: 1px solid #f4f4f4;
     }
 
+    /* กล่องข้อความ */
     .message-bubble {
-      border: 1.5px solid #F0EBE1;
-      border-radius: 16px;
-      padding: 24px;
       background: white;
+      border-radius: 12px;
+      padding: 28px;
       position: relative;
       flex-grow: 1;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+      border: 1px solid rgba(216, 140, 154, 0.15);
     }
 
     input[type="file"] { display: none; }
 
-    .reveal { animation: fadeUp 1s ease-out forwards; opacity: 0; }
-    .reveal-delay { animation: fadeUp 1s ease-out 0.4s forwards; opacity: 0; }
+    /* แอนิเมชันตอนโหลดหน้า */
+    .fade-up { animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+    .fade-up-delay-1 { animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards; opacity: 0; }
+    .fade-up-delay-2 { animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards; opacity: 0; }
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
@@ -100,115 +112,148 @@
       from { opacity: 0; transform: scale(0.95); }
       to { opacity: 1; transform: scale(1); }
     }
+
+    /* เส้นคลื่นแบ่ง Section ให้ดูสมูท */
+    .wave-divider {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+    }
+    .wave-divider svg {
+      position: relative;
+      display: block;
+      width: calc(100% + 1.3px);
+      height: 60px;
+    }
+    .wave-divider .shape-fill { fill: var(--cream); }
   </style>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
  </head>
 
  <body class="w-full">
   
-  <!-- ส่วนปก (Cover) ปรับให้รูปแสดง 100% แบบไม่มีทางโดนตัดขอบ -->
-  <header class="w-full relative">
-    <div class="w-full max-w-5xl mx-auto reveal pt-8 sm:pt-12 px-4 md:px-8">
-      <!-- รูปภาพจะย่อ-ขยายตามสัดส่วนจริง พร้อมขอบมนและเงาสวยๆ -->
-      <img src="cover.jpg" alt="Way and Ann Wedding Cover" class="w-full h-auto rounded-xl shadow-lg border-4 border-white" onerror="this.src='cover.png'">
+  <!-- ส่วนหน้าปก (Hero Section) สไตล์เรียบหรู คลีนๆ -->
+  <header class="w-full relative bg-[#F7F7F7] flex flex-col items-center pt-12 sm:pt-20 pb-32">
+    
+    <!-- รูปหน้าปก ไร้ขอบขาว ใช้เงาฟุ้งๆ ดันให้ลอยเด่น -->
+    <div class="w-full max-w-6xl px-4 sm:px-8 fade-up relative z-10">
+      <img src="cover.jpg" alt="Way and Ann Wedding Cover" class="w-full h-auto object-contain shadow-[0_20px_50px_rgba(0,0,0,0.1)] rounded-md" onerror="this.src='cover.png'">
     </div>
     
-    <!-- ปุ่มเลื่อนลงมาอวยพร -->
-    <div class="w-full text-center py-10 sm:py-14 reveal-delay">
-      <p class="font-modern-thai font-light text-base md:text-lg text-[#7A706A] mb-6 px-4">ร่วมแสดงความยินดีและเป็นสักขีพยานในวันสำคัญของเรา</p>
-      <a href="#write-wish" class="font-modern-thai btn-pastel inline-flex items-center rounded-full px-12 py-3.5 font-medium tracking-wide">ร่วมอวยพรบ่าวสาว 🤍</a>
+    <!-- ข้อความต้อนรับ ปรับระยะห่างให้ดูโปร -->
+    <div class="w-full text-center mt-16 sm:mt-24 px-4 fade-up-delay-1 relative z-10">
+      <p class="font-modern-thai font-light text-base md:text-lg text-[#7A706A] mb-8 tracking-wide">ร่วมแสดงความยินดีและเป็นสักขีพยานในวันสำคัญของเรา</p>
+      <a href="#write-wish" class="font-modern-thai btn-pastel inline-flex items-center rounded-full px-12 py-4 font-medium tracking-wide text-[15px]">ร่วมอวยพรบ่าวสาว 🤍</a>
+    </div>
+
+    <!-- เส้นคลื่นเชื่อมต่อกับโซนด้านล่างให้ดูเนียน -->
+    <div class="wave-divider">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C79.86,113.6,156.43,115.59,233.5,103.8Z" class="shape-fill"></path>
+        </svg>
     </div>
   </header>
 
-  <main class="w-full">
-   <section id="write-wish" class="w-full px-4 py-8 sm:px-10">
+  <!-- โซนสมุดอวยพร (มีลายจุดพาสเทลจางๆ) -->
+  <main class="w-full guestbook-wrapper">
+   <section id="write-wish" class="w-full px-4 py-16 sm:py-24 sm:px-10">
     <div class="mx-auto w-full max-w-6xl">
-     <div class="mb-14 text-center reveal">
-      <p class="font-elegant-eng text-4xl text-[#8BA895] mb-3">Guestbook</p>
-      <h2 class="font-modern-thai text-3xl font-medium text-[#4A403A]">สมุดอวยพร</h2>
+     
+     <div class="mb-16 text-center fade-up-delay-2">
+      <p class="font-elegant-eng text-4xl sm:text-5xl text-[#8BA895] mb-3 tracking-wide">Guestbook</p>
+      <h2 class="font-modern-thai text-2xl sm:text-3xl font-medium text-[#4A403A]">สมุดอวยพร</h2>
      </div>
 
-     <div class="grid items-start gap-12 lg:grid-cols-[1fr_1.2fr]">
+     <div class="grid items-start gap-12 lg:grid-cols-[1fr_1.3fr]">
       
-      <form id="wish-form" class="glass-card rounded-[2rem] p-6 sm:p-10 reveal">
-       <div class="mb-6">
-        <label for="guest-name" class="font-modern-thai mb-2 block font-medium text-[#7A706A]">ชื่อของคุณ</label> 
-        <input id="guest-name" class="font-modern-thai font-light field w-full rounded-2xl px-5 py-3.5 text-[#4A403A]" type="text" placeholder="ระบุชื่อของคุณ..." required>
+      <!-- ฟอร์มเขียนอวยพร -->
+      <form id="wish-form" class="glass-card rounded-3xl p-8 sm:p-10 fade-up-delay-2">
+       <div class="mb-7">
+        <label for="guest-name" class="font-modern-thai mb-2 block text-sm font-medium text-[#7A706A]">ชื่อของคุณ</label> 
+        <input id="guest-name" class="font-modern-thai font-light field w-full rounded-xl px-5 py-3.5 text-[#4A403A]" type="text" placeholder="ระบุชื่อของคุณ..." required>
        </div>
        
-       <div class="mb-6">
-        <label for="wish-message" class="font-modern-thai mb-2 block font-medium text-[#7A706A]">ข้อความอวยพร</label> 
-        <textarea id="wish-message" class="font-modern-thai font-light field min-h-[140px] w-full resize-y rounded-2xl px-5 py-3.5 text-[#4A403A]" placeholder="เขียนความรู้สึกดีๆ..." required></textarea>
+       <div class="mb-7">
+        <label for="wish-message" class="font-modern-thai mb-2 block text-sm font-medium text-[#7A706A]">ข้อความอวยพร</label> 
+        <textarea id="wish-message" class="font-modern-thai font-light field min-h-[150px] w-full resize-y rounded-xl px-5 py-3.5 text-[#4A403A]" placeholder="เขียนความรู้สึกดีๆ..." required></textarea>
        </div>
 
-       <div class="mb-8">
-        <p class="font-modern-thai mb-2 block font-medium text-[#7A706A]">แนบรูปภาพ (ไม่บังคับ)</p>
-        <label for="image-upload" class="font-modern-thai inline-flex items-center gap-2 px-5 py-3 bg-white text-[#8BA895] rounded-xl cursor-pointer hover:bg-[#F9FAF9] transition font-medium border border-[#E2EFE6] shadow-sm">
+       <!-- ส่วนแนบรูปภาพ -->
+       <div class="mb-10">
+        <p class="font-modern-thai mb-2 block text-sm font-medium text-[#7A706A]">แนบรูปภาพ (ไม่บังคับ)</p>
+        <label for="image-upload" class="font-modern-thai inline-flex items-center gap-2 px-6 py-3.5 bg-white text-[#8BA895] rounded-xl cursor-pointer hover:bg-[#F9FAF9] transition font-medium border border-[#E2EFE6] shadow-sm text-sm">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
           เลือกรูปภาพโพลารอยด์
         </label>
         <input id="image-upload" type="file" accept="image/*">
         
         <div id="image-preview-container" class="hidden mt-6">
-           <div class="polaroid w-40 cursor-default">
+           <div class="polaroid w-36 cursor-default">
              <img id="image-preview" src="" alt="preview">
            </div>
-           <button type="button" id="remove-image" class="font-modern-thai block mt-3 text-sm text-[#D88C9A] hover:text-red-500 transition">ลบรูปภาพ ✕</button>
+           <button type="button" id="remove-image" class="font-modern-thai block mt-3 text-sm text-[#D88C9A] hover:text-red-500 transition ml-2">ลบรูปภาพ ✕</button>
         </div>
        </div>
 
-       <button id="submit-button" class="font-modern-thai btn-pastel w-full rounded-2xl px-6 py-4 font-medium text-lg tracking-wide" type="submit">ส่งข้อความ 🤍</button>
+       <button id="submit-button" class="font-modern-thai btn-pastel w-full rounded-xl px-6 py-4 font-medium text-[15px] tracking-wide" type="submit">ส่งข้อความอวยพร 🤍</button>
        
-       <div class="font-modern-thai mt-4 h-6 text-center text-sm font-medium">
+       <div class="font-modern-thai mt-5 h-6 text-center text-sm font-medium">
          <p id="sending-status" class="hidden text-[#8BA895]">กำลังส่งข้อมูล...</p>
          <p id="success-status" class="hidden text-[#D88C9A]">ส่งข้อความเรียบร้อย ขอบคุณครับ/ค่ะ!</p>
          <p id="error-status" class="hidden text-red-400">เกิดข้อผิดพลาด ลองใหม่อีกครั้ง</p>
        </div>
       </form>
 
-      <div class="reveal">
-       <div class="mb-8 flex items-end justify-between gap-4 border-b border-[#E2EFE6] pb-4">
+      <!-- รายการอวยพร -->
+      <div class="fade-up-delay-2 pt-4">
+       <div class="mb-8 flex items-end justify-between gap-4 border-b border-[#EAE5D9] pb-4">
         <h2 class="font-modern-thai text-xl font-medium text-[#4A403A]">ข้อความจากแขกผู้มีเกียรติ</h2>
-        <span id="wish-count" class="font-modern-thai text-sm text-[#8BA895]"></span>
+        <span id="wish-count" class="font-modern-thai text-sm text-[#8BA895] bg-white px-3 py-1 rounded-full border border-[#E2EFE6]"></span>
        </div>
-       <div id="wish-list" class="flex flex-col gap-6 max-h-[700px] overflow-y-auto pr-2" style="scrollbar-width: thin; scrollbar-color: #E2EFE6 transparent;"></div>
+       <div id="wish-list" class="flex flex-col gap-8 max-h-[750px] overflow-y-auto pr-3 pb-10" style="scrollbar-width: thin; scrollbar-color: #D88C9A transparent;"></div>
       </div>
 
      </div>
     </div>
    </section>
+
+   <footer class="w-full py-16 text-center bg-[#F7F7F7]">
+     <div class="flex justify-center mb-6">
+       <img src="logo.png" alt="NJ" class="logo-blend w-14 opacity-60" onerror="this.src='logo.jpg'">
+     </div>
+     <p class="font-elegant-eng text-2xl text-[#8BA895]">Thank you for being part of our story</p>
+   </footer>
   </main>
   
-  <footer class="w-full py-12 text-center">
-    <div class="flex justify-center mb-4">
-      <img src="logo.png" alt="NJ" class="logo-blend w-12 opacity-70" onerror="this.src='logo.jpg'">
-    </div>
-    <p class="font-elegant-eng text-xl text-[#8BA895]">Thank you for being part of our story</p>
-  </footer>
-
-  <div id="image-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 transition-opacity cursor-pointer">
+  <!-- Popup รูปใหญ่ -->
+  <div id="image-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/85 backdrop-blur-md p-4 transition-opacity cursor-pointer">
     <button id="close-modal" class="absolute top-6 right-6 md:top-10 md:right-10 text-white hover:text-[#D88C9A] transition text-4xl">&times;</button>
     <img id="modal-image" src="" alt="ภาพขยาย" class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl modal-enter cursor-default">
   </div>
 
+  <!-- Template การ์ดอวยพร -->
   <template id="wish-template">
-   <div class="flex flex-col sm:flex-row gap-5 items-start w-full transition-transform hover:-translate-y-1 duration-300">
-     <div data-template-id="image-container" class="w-full sm:w-48 flex-shrink-0 hidden pt-2">
-       <div class="polaroid w-full max-w-[180px] mx-auto sm:mx-0" title="คลิกเพื่อดูรูปใหญ่">
+   <div class="flex flex-col sm:flex-row gap-6 items-start w-full transition-transform hover:-translate-y-1 duration-300">
+     <div data-template-id="image-container" class="w-full sm:w-40 flex-shrink-0 hidden pt-1">
+       <div class="polaroid w-full max-w-[160px] mx-auto sm:mx-0" title="คลิกเพื่อดูรูปใหญ่">
          <img data-template-id="wish-image" src="" alt="guest photo">
        </div>
      </div>
 
      <div class="message-bubble w-full">
-       <h3 data-template-id="wish-name" class="font-modern-thai font-medium text-[#D88C9A] text-lg mb-3"></h3>
-       <p data-template-id="wish-message" class="font-modern-thai font-light whitespace-pre-wrap leading-relaxed text-[#4A403A]"></p>
-       <div class="mt-4 text-right">
-         <time data-template-id="wish-date" class="font-modern-thai font-light text-xs text-[#A39E9B]"></time>
+       <h3 data-template-id="wish-name" class="font-modern-thai font-medium text-[#D88C9A] text-[17px] mb-3"></h3>
+       <p data-template-id="wish-message" class="font-modern-thai font-light whitespace-pre-wrap leading-relaxed text-[#5A504A] text-[15px]"></p>
+       <div class="mt-5 text-right">
+         <time data-template-id="wish-date" class="font-modern-thai font-light text-[12px] text-[#A39E9B] tracking-wide"></time>
        </div>
      </div>
    </div>
   </template>
 
+  <!-- Script (การทำงานหลังบ้านเหมือนเดิม 100%) -->
   <script>
     const form = document.getElementById('wish-form');
     const submitButton = document.getElementById('submit-button');
@@ -349,7 +394,7 @@
         showStatus('error-status');
       } finally {
         submitButton.disabled = false;
-        submitButton.innerHTML = "ส่งข้อความ 🤍";
+        submitButton.innerHTML = "ส่งข้อความอวยพร 🤍";
         setTimeout(() => { document.getElementById('success-status').classList.add('hidden'); }, 3000);
       }
     });
