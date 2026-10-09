@@ -4,9 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>คำอวยพรวันแต่งงาน</title>
+  
+  <!-- นำเข้าฟอนต์สไตล์ Modern & Elegant -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Noto+Sans+Thai:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Noto+Sans+Thai:wght@300;400;500&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
   
   <style>
     :root { 
@@ -15,7 +17,7 @@
       --pink-dark: #D88C9A;
       --green-pastel: #E2EFE6; 
       --green-dark: #8BA895;
-      --text-main: #5C4D4D;
+      --text-main: #4A403A; /* ปรับสีตัวอักษรให้ดูซอฟต์ลงนิดนึง */
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -27,8 +29,10 @@
       background-image: radial-gradient(var(--pink-pastel) 1px, transparent 1px);
       background-size: 40px 40px;
     }
-    .font-romantic { font-family: 'Charm', cursive; }
-    .font-eng-script { font-family: 'Great Vibes', cursive; }
+    
+    /* ฟอนต์ใหม่ที่เพิ่มเข้ามา */
+    .font-modern-thai { font-family: 'Prompt', sans-serif; letter-spacing: 0.5px; }
+    .font-elegant-eng { font-family: 'Cormorant Garamond', serif; font-style: italic; }
     
     .hero-bg {
       background: linear-gradient(135deg, rgba(252,249,242,0.9) 0%, rgba(250,220,217,0.7) 50%, rgba(226,239,230,0.8) 100%);
@@ -42,7 +46,7 @@
       box-shadow: 0 15px 35px rgba(216, 140, 154, 0.1);
     }
     .field { border: 2px solid #F0EBE1; background: #FFFFFF; transition: all 0.3s; }
-    .field:focus { border-color: var(--pink-dark); outline: none; }
+    .field:focus { border-color: var(--pink-dark); outline: none; box-shadow: 0 0 0 4px rgba(216, 140, 154, 0.1); }
     
     .btn-pastel {
       background: linear-gradient(135deg, var(--pink-dark), #e29caa);
@@ -51,38 +55,38 @@
       transition: all 0.3s ease;
       cursor: pointer;
     }
-    .btn-pastel:hover { transform: translateY(-2px); }
+    .btn-pastel:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(216, 140, 154, 0.4);}
 
     /* สไตล์รูปโพลารอยด์ */
     .polaroid {
       background: #fff;
-      padding: 10px 10px 35px 10px; /* ขอบล่างหนาๆ แบบโพลารอยด์ */
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.05);
-      border-radius: 4px;
+      padding: 10px 10px 35px 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04);
+      border-radius: 2px;
       display: inline-block;
       transform: rotate(-2deg);
       transition: transform 0.3s ease;
     }
-    .polaroid:hover { transform: rotate(0deg) scale(1.02); }
+    .polaroid:hover { transform: rotate(0deg) scale(1.02); z-index: 10;}
     .polaroid img {
       width: 100%;
       height: 200px;
       object-fit: cover;
-      background: #f0f0f0;
-      border: 1px solid #eee;
+      background: #f8f8f8;
+      border: 1px solid #f0f0f0;
     }
 
-    /* กล่องข้อความอวยพร (ขอบโค้ง) */
+    /* กล่องข้อความอวยพร */
     .message-bubble {
-      border: 3px solid var(--pink-dark);
-      border-radius: 20px;
-      padding: 20px;
+      border: 1.5px solid #F0EBE1;
+      border-radius: 16px;
+      padding: 24px;
       background: white;
       position: relative;
       flex-grow: 1;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.02);
     }
 
-    /* ซ่อนปุ่มอัปโหลดไฟล์ของเดิม (เพื่อทำปุ่มสวยๆ แทน) */
     input[type="file"] { display: none; }
 
     .reveal { animation: fadeUp 1s ease-out forwards; opacity: 0; }
@@ -98,10 +102,15 @@
   <header class="w-full">
    <section class="hero-bg relative flex w-full items-center justify-center overflow-hidden min-h-[70vh]">
     <div class="relative z-10 mx-auto w-full max-w-4xl px-6 py-20 text-center">
-      <p class="font-eng-script reveal text-5xl md:text-6xl text-[#D88C9A] mb-4">Wedding Celebration</p>
-      <h1 class="font-romantic reveal text-4xl md:text-5xl font-bold leading-[1.5] text-[#5C4D4D] mb-6">ขอเรียนเชิญร่วมงานมงคลสมรส</h1>
-      <p class="reveal mb-10 text-lg max-w-lg mx-auto text-[#7A706A]">ร่วมแสดงความยินดีและเป็นสักขีพยานในวันสำคัญของเรา</p>
-      <a href="#write-wish" class="reveal btn-pastel inline-flex items-center rounded-full px-10 py-3 font-medium">ร่วมเขียนคำอวยพร</a>
+      <p class="font-elegant-eng reveal text-4xl md:text-5xl text-[#D88C9A] mb-5 tracking-wide">Wedding Celebration</p>
+      <h1 class="font-modern-thai reveal text-3xl md:text-4xl font-medium leading-[1.6] text-[#4A403A] mb-6">ขอเรียนเชิญร่วมงานมงคลสมรส</h1>
+      <div class="flex justify-center items-center gap-4 reveal mb-8">
+        <span class="h-[1px] w-10 bg-[#8BA895]"></span>
+        <svg class="w-5 h-5 text-[#D88C9A]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        <span class="h-[1px] w-10 bg-[#8BA895]"></span>
+      </div>
+      <p class="font-modern-thai font-light reveal mb-10 text-base md:text-lg max-w-lg mx-auto text-[#7A706A]">ร่วมแสดงความยินดีและเป็นสักขีพยานในวันสำคัญของเรา</p>
+      <a href="#write-wish" class="font-modern-thai reveal btn-pastel inline-flex items-center rounded-full px-10 py-3 font-medium tracking-wide">ร่วมอวยพรบ่าวสาว</a>
     </div>
    </section>
   </header>
@@ -110,56 +119,57 @@
    <section id="write-wish" class="w-full px-4 py-16 sm:px-10">
     <div class="mx-auto w-full max-w-6xl">
      <div class="mb-14 text-center reveal">
-      <p class="font-eng-script text-4xl text-[#8BA895] mb-2">Guestbook</p>
-      <h2 class="font-romantic text-4xl font-bold text-[#5C4D4D]">สมุดอวยพร</h2>
+      <p class="font-elegant-eng text-4xl text-[#8BA895] mb-3">Guestbook</p>
+      <h2 class="font-modern-thai text-3xl font-medium text-[#4A403A]">สมุดอวยพร</h2>
      </div>
 
      <div class="grid items-start gap-12 lg:grid-cols-[1fr_1.2fr]">
       
       <!-- ฟอร์ม -->
       <form id="wish-form" class="glass-card rounded-[2rem] p-6 sm:p-10 reveal">
-       <div class="mb-5">
-        <label for="guest-name" class="mb-2 block font-medium text-[#7A706A]">ชื่อของคุณ</label> 
-        <input id="guest-name" class="field w-full rounded-2xl px-5 py-3 text-[#5C4D4D]" type="text" required>
+       <div class="mb-6">
+        <label for="guest-name" class="font-modern-thai mb-2 block font-medium text-[#7A706A]">ชื่อของคุณ</label> 
+        <input id="guest-name" class="font-modern-thai font-light field w-full rounded-2xl px-5 py-3.5 text-[#4A403A]" type="text" placeholder="ระบุชื่อของคุณ..." required>
        </div>
        
-       <div class="mb-5">
-        <label for="wish-message" class="mb-2 block font-medium text-[#7A706A]">ข้อความอวยพร</label> 
-        <textarea id="wish-message" class="field min-h-[120px] w-full resize-y rounded-2xl px-5 py-3 text-[#5C4D4D]" required></textarea>
+       <div class="mb-6">
+        <label for="wish-message" class="font-modern-thai mb-2 block font-medium text-[#7A706A]">ข้อความอวยพร</label> 
+        <textarea id="wish-message" class="font-modern-thai font-light field min-h-[140px] w-full resize-y rounded-2xl px-5 py-3.5 text-[#4A403A]" placeholder="เขียนความรู้สึกดีๆ..." required></textarea>
        </div>
 
        <!-- ส่วนแนบรูปภาพ -->
-       <div class="mb-6">
-        <p class="mb-2 block font-medium text-[#7A706A]">แนบรูปภาพ (ไม่บังคับ)</p>
-        <label for="image-upload" class="inline-flex items-center gap-2 px-5 py-3 bg-[#E2EFE6] text-[#8BA895] rounded-xl cursor-pointer hover:bg-[#d1e6d7] transition font-medium border-2 border-dashed border-[#8BA895]">
+       <div class="mb-8">
+        <p class="font-modern-thai mb-2 block font-medium text-[#7A706A]">แนบรูปภาพ (ไม่บังคับ)</p>
+        <label for="image-upload" class="font-modern-thai inline-flex items-center gap-2 px-5 py-3 bg-white text-[#8BA895] rounded-xl cursor-pointer hover:bg-[#F9FAF9] transition font-medium border border-[#E2EFE6] shadow-sm">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
           เลือกรูปภาพโพลารอยด์
         </label>
         <input id="image-upload" type="file" accept="image/*">
-        <!-- แสดงรูปตัวอย่างก่อนส่ง -->
-        <div id="image-preview-container" class="hidden mt-4">
+        
+        <div id="image-preview-container" class="hidden mt-6">
            <div class="polaroid w-40">
              <img id="image-preview" src="" alt="preview">
            </div>
-           <button type="button" id="remove-image" class="block mt-2 text-sm text-red-400 underline">ลบรูป</button>
+           <button type="button" id="remove-image" class="font-modern-thai block mt-3 text-sm text-[#D88C9A] hover:text-red-500 transition">ลบรูปภาพ ✕</button>
         </div>
        </div>
 
-       <button id="submit-button" class="btn-pastel w-full rounded-2xl px-6 py-4 font-medium text-lg" type="submit">ส่งคำอวยพร 🤍</button>
+       <button id="submit-button" class="font-modern-thai btn-pastel w-full rounded-2xl px-6 py-4 font-medium text-lg tracking-wide" type="submit">ส่งข้อความ 🤍</button>
        
-       <div class="mt-4 h-6 text-center text-sm font-medium">
+       <div class="font-modern-thai mt-4 h-6 text-center text-sm font-medium">
          <p id="sending-status" class="hidden text-[#8BA895]">กำลังส่งข้อมูล...</p>
-         <p id="success-status" class="hidden text-[#D88C9A]">ส่งคำอวยพรเรียบร้อย ขอบคุณครับ/ค่ะ!</p>
+         <p id="success-status" class="hidden text-[#D88C9A]">ส่งข้อความเรียบร้อย ขอบคุณครับ/ค่ะ!</p>
          <p id="error-status" class="hidden text-red-400">เกิดข้อผิดพลาด ลองใหม่อีกครั้ง</p>
        </div>
       </form>
 
       <!-- รายการอวยพร -->
       <div class="reveal">
-       <div class="mb-6 flex items-end justify-between gap-4 border-b border-[#E2EFE6] pb-4">
-        <h2 class="font-romantic text-2xl font-bold text-[#5C4D4D]">ข้อความจากแขกผู้มีเกียรติ</h2>
+       <div class="mb-8 flex items-end justify-between gap-4 border-b border-[#E2EFE6] pb-4">
+        <h2 class="font-modern-thai text-xl font-medium text-[#4A403A]">ข้อความจากแขกผู้มีเกียรติ</h2>
+        <span id="wish-count" class="font-modern-thai text-sm text-[#8BA895]"></span>
        </div>
-       <div id="wish-list" class="flex flex-col gap-8 max-h-[700px] overflow-y-auto pr-2" style="scrollbar-width: thin;"></div>
+       <div id="wish-list" class="flex flex-col gap-6 max-h-[700px] overflow-y-auto pr-2" style="scrollbar-width: thin; scrollbar-color: #E2EFE6 transparent;"></div>
       </div>
 
      </div>
@@ -167,24 +177,26 @@
    </section>
   </main>
   
+  <footer class="w-full py-12 text-center">
+    <p class="font-elegant-eng text-2xl text-[#8BA895]">Thank you for being part of our story</p>
+  </footer>
+
   <!-- Template สำหรับการ์ด 1 ใบ -->
   <template id="wish-template">
-   <div class="flex flex-col sm:flex-row gap-4 items-start w-full">
-     <!-- ส่วนฝั่งซ้าย: รูปโพลารอยด์ (จะถูกซ่อนถ้าไม่มีรูป) -->
-     <div data-template-id="image-container" class="w-full sm:w-48 flex-shrink-0 hidden">
-       <div class="polaroid w-full max-w-[200px] mx-auto sm:mx-0">
+   <div class="flex flex-col sm:flex-row gap-5 items-start w-full transition-transform hover:-translate-y-1 duration-300">
+     <!-- รูปโพลารอยด์ -->
+     <div data-template-id="image-container" class="w-full sm:w-48 flex-shrink-0 hidden pt-2">
+       <div class="polaroid w-full max-w-[180px] mx-auto sm:mx-0">
          <img data-template-id="wish-image" src="" alt="guest photo">
        </div>
      </div>
 
-     <!-- ส่วนฝั่งขวา: กล่องข้อความและชื่อ -->
-     <div class="message-bubble w-full shadow-sm">
-       <div class="bg-[#D88C9A] text-white px-4 py-2 rounded-t-[16px] rounded-br-[16px] inline-block mb-3 shadow-md">
-         <h3 data-template-id="wish-name" class="font-bold text-lg"></h3>
-       </div>
-       <p data-template-id="wish-message" class="whitespace-pre-wrap leading-relaxed text-[#5C4D4D] text-lg font-medium"></p>
+     <!-- กล่องข้อความ -->
+     <div class="message-bubble w-full">
+       <h3 data-template-id="wish-name" class="font-modern-thai font-medium text-[#D88C9A] text-lg mb-3"></h3>
+       <p data-template-id="wish-message" class="font-modern-thai font-light whitespace-pre-wrap leading-relaxed text-[#4A403A]"></p>
        <div class="mt-4 text-right">
-         <time data-template-id="wish-date" class="text-xs text-gray-400"></time>
+         <time data-template-id="wish-date" class="font-modern-thai font-light text-xs text-[#A39E9B]"></time>
        </div>
      </div>
    </div>
@@ -194,14 +206,14 @@
     const form = document.getElementById('wish-form');
     const submitButton = document.getElementById('submit-button');
     const list = document.getElementById('wish-list');
+    const count = document.getElementById('wish-count');
     const imageInput = document.getElementById('image-upload');
     const imagePreviewContainer = document.getElementById('image-preview-container');
     const imagePreview = document.getElementById('image-preview');
     const removeImageBtn = document.getElementById('remove-image');
     
-    let base64Image = null; // ตัวแปรเก็บรูปที่แปลงแล้ว
+    let base64Image = null;
 
-    // --- ระบบย่อขนาดรูปภาพ (สำคัญมาก เพื่อไม่ให้ฐานข้อมูลเต็ม) ---
     imageInput.addEventListener('change', function(event) {
       const file = event.target.files[0];
       if (!file) return;
@@ -212,9 +224,8 @@
         const img = new Image();
         img.src = e.target.result;
         img.onload = function() {
-          // สร้าง Canvas เพื่อย่อขนาดรูป
           const canvas = document.createElement('canvas');
-          const MAX_WIDTH = 600; // ย่อรูปไม่ให้กว้างเกิน 600px
+          const MAX_WIDTH = 600; 
           let width = img.width;
           let height = img.height;
 
@@ -227,24 +238,20 @@
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0, width, height);
           
-          // แปลงกลับเป็น Base64 แบบบีบอัดคุณภาพ 70%
           base64Image = canvas.toDataURL('image/jpeg', 0.7);
           
-          // แสดงรูปตัวอย่าง
           imagePreview.src = base64Image;
           imagePreviewContainer.classList.remove('hidden');
         }
       }
     });
 
-    // ปุ่มลบรูปภาพ
     removeImageBtn.addEventListener('click', () => {
       imageInput.value = '';
       base64Image = null;
       imagePreviewContainer.classList.add('hidden');
     });
 
-    // --- ระบบส่งข้อมูล ---
     function showStatus(id) {
       ['sending-status', 'success-status', 'error-status'].forEach(key => {
         document.getElementById(key).classList.toggle('hidden', key !== id);
@@ -259,12 +266,12 @@
 
     function renderWishes(data) {
       list.innerHTML = ''; 
+      count.textContent = `${data.length} ข้อความ`;
       data.forEach(record => {
         const card = document.getElementById('wish-template').content.cloneNode(true);
         card.querySelector('[data-template-id="wish-name"]').textContent = record.guest_name;
         card.querySelector('[data-template-id="wish-message"]').textContent = record.message;
         
-        // ถ้ามีรูปภาพ ให้แสดงกรอบโพลารอยด์
         if (record.image_base64) {
           const imgContainer = card.querySelector('[data-template-id="image-container"]');
           const imgElement = card.querySelector('[data-template-id="wish-image"]');
@@ -286,19 +293,19 @@
       const message = document.getElementById('wish-message').value.trim();
       
       submitButton.disabled = true;
+      submitButton.innerHTML = "กำลังส่ง...";
       showStatus('sending-status');
 
       try {
         const response = await fetch('/api/wishes', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          // ส่งรูปภาพไปด้วย (ถ้าไม่ได้เลือกรูป base64Image จะเป็น null)
           body: JSON.stringify({ guest_name: guestName, message: message, image_base64: base64Image })
         });
 
         if (response.ok) {
           form.reset();
-          removeImageBtn.click(); // เคลียร์รูป
+          removeImageBtn.click();
           showStatus('success-status');
           fetchWishes(); 
         } else {
@@ -308,6 +315,7 @@
         showStatus('error-status');
       } finally {
         submitButton.disabled = false;
+        submitButton.innerHTML = "ส่งข้อความ 🤍";
         setTimeout(() => { document.getElementById('success-status').classList.add('hidden'); }, 3000);
       }
     });
